@@ -1,0 +1,50 @@
+import 'package:flutter/material.dart';
+import 'package:headache_tracker/widgets/form_dialog.dart';
+import 'package:headache_tracker/widgets/headache_list.dart';
+
+class Home extends StatefulWidget {
+  const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      appBar: _appBar(),
+      floatingActionButton: _floatingActionBtn(),
+      body: Container(
+        margin: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [HeadacheList()],
+        ),
+      ),
+    );
+  }
+
+  IconButton _floatingActionBtn() {
+    return IconButton.filled(
+      onPressed: () {
+        showAddEditDialog(context: context, mode: 'add');
+      },
+      icon: const Icon(Icons.add, size: 60),
+      style: Theme.of(context).iconButtonTheme.style,
+    );
+  }
+
+  AppBar _appBar() {
+    return AppBar(
+      centerTitle: true,
+      title: const Text(
+        'Headache Journal',
+        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+      ),
+
+      forceMaterialTransparency: true,
+    );
+  }
+}
