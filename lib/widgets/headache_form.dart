@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:headache_tracker/models/headache_event.dart';
 import 'package:headache_tracker/providers/headache_model.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +15,20 @@ class HeadacheForm extends StatefulWidget {
 class _HeadacheFormState extends State<HeadacheForm> {
   final _formKey = GlobalKey<FormState>();
   final _dateController = TextEditingController();
+  final _dateFormatter = DateFormat('MM-dd-yyyy');
+
+  final HeadacheEvent _headacheForm = HeadacheEvent(
+    id: 0,
+    intensity: 0,
+    occurenceDate: DateTime.now(),
+    numAdvilTaken: 0,
+  );
+
+  @override
+  void initState() {
+    _dateController.text = _dateFormatter.format(DateTime.now());
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -24,7 +39,7 @@ class _HeadacheFormState extends State<HeadacheForm> {
   @override
   Widget build(BuildContext context) {
     return Consumer<HeadacheModel>(
-      builder: (context, headache, _) => Form(
+      builder: (context, headacheModel, _) => Form(
         key: _formKey,
         child: Container(
           decoration: BoxDecoration(
@@ -42,6 +57,7 @@ class _HeadacheFormState extends State<HeadacheForm> {
               _intensityInput(),
               _numAdvilInput(),
               _notesInput(),
+              _dialogButtons(context, headacheModel),
             ],
           ),
         ),
@@ -53,21 +69,39 @@ class _HeadacheFormState extends State<HeadacheForm> {
     return TextFormField(
       decoration: InputDecoration(labelText: "Intensity (1-5)"),
       keyboardType: TextInputType.number,
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Enter a digit 1 to 5';
+      onSaved: (value) {
+        if (value != null && value.isNotEmpty) {
+          var valueInt = int.parse(value);
+          _headacheForm.intensity = valueInt;
         }
+      },
+      validator: (value) {
+        const msg = 'Enter a digit 1 to 5';
+        if (value != null && value.isNotEmpty) {
+          var valueInt = int.parse(value);
+          if (valueInt < 1 || valueInt > 5) {
+            return msg;
+          }
+        } else if (value == null || value.isEmpty) {
+          return msg;
+        }
+
         return null;
       },
       inputFormatters: [FilteringTextInputFormatter.digitsOnly],
     );
   }
 
-  // TODO: eventually break advil out into own object, add amount and time taken
   TextFormField _numAdvilInput() {
     return TextFormField(
       decoration: InputDecoration(labelText: "# Advil Taken"),
       keyboardType: TextInputType.number,
+      onSaved: (value) {
+        if (value != null && value.isNotEmpty) {
+          var valueInt = int.parse(value);
+          _headacheForm.numAdvilTaken = valueInt;
+        }
+      },
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Enter digit';
@@ -83,6 +117,7 @@ class _HeadacheFormState extends State<HeadacheForm> {
       decoration: InputDecoration(labelText: "Notes"),
       maxLines: 3,
       keyboardType: TextInputType.multiline,
+      onSaved: (value) => _headacheForm.notes = value,
     );
   }
 
@@ -96,8 +131,8 @@ class _HeadacheFormState extends State<HeadacheForm> {
           onPressed: () async {
             var date = await _selectDate(context);
             if (date != null) {
-              var formatter = DateFormat('MM-dd-yyyy');
-              _dateController.text = formatter.format(date);
+              _dateController.text = _dateFormatter.format(date);
+              _headacheForm.occurenceDate = date;
             }
           },
         ),
@@ -107,6 +142,30 @@ class _HeadacheFormState extends State<HeadacheForm> {
             controller: _dateController,
             decoration: InputDecoration(labelText: 'Date'),
           ),
+        ),
+      ],
+    );
+  }
+
+  Row _dialogButtons(BuildContext context, HeadacheModel headacheModel) {
+    return Row(
+      spacing: 30,
+      children: [
+        ElevatedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text('Close'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            if (_formKey.currentState!.validate()) {
+              _formKey.currentState!.save();
+              headacheModel.add(_headacheForm);
+            }
+            // Navigator.pop(context);
+          },
+          child: Text('Save'),
         ),
       ],
     );

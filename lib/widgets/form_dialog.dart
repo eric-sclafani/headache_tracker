@@ -11,26 +11,12 @@ class FormDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<HeadacheModel>(
-      builder: (context, headache, _) => AlertDialog(
+      builder: (context, headacheModel, _) => AlertDialog(
         title: Text(
           mode == 'add' ? 'Add new' : 'Editing',
           textAlign: TextAlign.center,
         ),
         content: HeadacheForm(),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text('Save'),
-          ),
-        ],
       ),
     );
   }
