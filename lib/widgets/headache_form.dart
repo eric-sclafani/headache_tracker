@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:headache_tracker/models/headache_event.dart';
 import 'package:headache_tracker/providers/headache_model.dart';
-import 'package:intl/intl.dart';
+import 'package:headache_tracker/utils/date_formatter.dart';
 import 'package:provider/provider.dart';
 
 class HeadacheForm extends StatefulWidget {
@@ -15,7 +15,6 @@ class HeadacheForm extends StatefulWidget {
 class _HeadacheFormState extends State<HeadacheForm> {
   final _formKey = GlobalKey<FormState>();
   final _dateController = TextEditingController();
-  final _dateFormatter = DateFormat('MM-dd-yyyy');
 
   final HeadacheEvent _headacheForm = HeadacheEvent(
     id: 0,
@@ -26,7 +25,7 @@ class _HeadacheFormState extends State<HeadacheForm> {
 
   @override
   void initState() {
-    _dateController.text = _dateFormatter.format(DateTime.now());
+    _dateController.text = DateFormatter.format(DateTime.now());
     super.initState();
   }
 
@@ -131,7 +130,7 @@ class _HeadacheFormState extends State<HeadacheForm> {
           onPressed: () async {
             var date = await _selectDate(context);
             if (date != null) {
-              _dateController.text = _dateFormatter.format(date);
+              _dateController.text = DateFormatter.format(date);
               _headacheForm.occurenceDate = date;
             }
           },
@@ -162,8 +161,8 @@ class _HeadacheFormState extends State<HeadacheForm> {
             if (_formKey.currentState!.validate()) {
               _formKey.currentState!.save();
               headacheModel.add(_headacheForm);
+              Navigator.pop(context);
             }
-            // Navigator.pop(context);
           },
           child: Text('Save'),
         ),

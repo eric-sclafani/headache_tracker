@@ -22,6 +22,7 @@ class HeadacheModel extends ChangeNotifier {
   }
 }
 
+// IDEA: have a "timestamp" data type. Different types of timestamps: advil, Icepack, etc..
 List<HeadacheEvent> _initSeedData() {
   List<HeadacheEvent> data = [];
   data.add(

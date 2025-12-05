@@ -31,8 +31,7 @@ class _HomeState extends State<Home> {
       onPressed: () {
         showAddEditDialog(context: context, mode: 'add');
       },
-      icon: const Icon(Icons.add, size: 60),
-      style: Theme.of(context).iconButtonTheme.style,
+      icon: const Icon(Icons.add_sharp, size: 60),
     );
   }
 
