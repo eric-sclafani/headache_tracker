@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:headache_tracker/models/headache_event.dart';
+import 'package:headache_tracker/models/headache.dart';
 import 'package:headache_tracker/providers/headache_model.dart';
-import 'package:headache_tracker/utils/date_formatter.dart';
+import 'package:headache_tracker/utils/datetime_formatter.dart';
 import 'package:provider/provider.dart';
 
 class HeadacheForm extends StatefulWidget {
@@ -16,16 +16,15 @@ class _HeadacheFormState extends State<HeadacheForm> {
   final _formKey = GlobalKey<FormState>();
   final _dateController = TextEditingController();
 
-  final HeadacheEvent _headacheForm = HeadacheEvent(
+  final Headache _headacheForm = Headache(
     id: 0,
     intensity: 0,
     occurenceDate: DateTime.now(),
-    numAdvilTaken: 0,
   );
 
   @override
   void initState() {
-    _dateController.text = DateFormatter.format(DateTime.now());
+    _dateController.text = DateTimeFormatter.formatDate(DateTime.now());
     super.initState();
   }
 
@@ -54,7 +53,6 @@ class _HeadacheFormState extends State<HeadacheForm> {
             children: [
               _occurenceDateInput(context),
               _intensityInput(),
-              _numAdvilInput(),
               _notesInput(),
               _dialogButtons(context, headacheModel),
             ],
@@ -91,25 +89,25 @@ class _HeadacheFormState extends State<HeadacheForm> {
     );
   }
 
-  TextFormField _numAdvilInput() {
-    return TextFormField(
-      decoration: InputDecoration(labelText: "# Advil Taken"),
-      keyboardType: TextInputType.number,
-      onSaved: (value) {
-        if (value != null && value.isNotEmpty) {
-          var valueInt = int.parse(value);
-          _headacheForm.numAdvilTaken = valueInt;
-        }
-      },
-      validator: (value) {
-        if (value == null || value.isEmpty) {
-          return 'Enter digit';
-        }
-        return null;
-      },
-      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-    );
-  }
+  // TextFormField _numAdvilInput() {
+  //   return TextFormField(
+  //     decoration: InputDecoration(labelText: "# Advil Taken"),
+  //     keyboardType: TextInputType.number,
+  //     onSaved: (value) {
+  //       if (value != null && value.isNotEmpty) {
+  //         var valueInt = int.parse(value);
+  //         _headacheForm.numAdvilTaken = valueInt;
+  //       }
+  //     },
+  //     validator: (value) {
+  //       if (value == null || value.isEmpty) {
+  //         return 'Enter digit';
+  //       }
+  //       return null;
+  //     },
+  //     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+  //   );
+  // }
 
   TextFormField _notesInput() {
     return TextFormField(
@@ -130,7 +128,7 @@ class _HeadacheFormState extends State<HeadacheForm> {
           onPressed: () async {
             var date = await _selectDate(context);
             if (date != null) {
-              _dateController.text = DateFormatter.format(date);
+              _dateController.text = DateTimeFormatter.formatDate(date);
               _headacheForm.occurenceDate = date;
             }
           },

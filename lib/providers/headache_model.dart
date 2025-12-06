@@ -1,16 +1,20 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:headache_tracker/models/headache_event.dart';
+import 'package:headache_tracker/enums/timestamp_type.dart';
+import 'package:headache_tracker/models/headache.dart';
+import 'package:headache_tracker/models/timestamp.dart';
 
 class HeadacheModel extends ChangeNotifier {
-  final List<HeadacheEvent> _headaches = _initSeedData();
+  final List<Headache> _headaches = _initSeedData();
 
-  UnmodifiableListView<HeadacheEvent> get allHeadaches =>
-      UnmodifiableListView(_headaches);
+  UnmodifiableListView<Headache> get allHeadaches {
+    _headaches.sort((a, b) => b.occurenceDate.compareTo(a.occurenceDate));
+    return UnmodifiableListView(_headaches);
+  }
 
   int get totalHeadaches => _headaches.length;
 
-  void add(HeadacheEvent headache) {
+  void add(Headache headache) {
     headache.id = _getLatestId();
     _headaches.add(headache);
     notifyListeners();
@@ -22,44 +26,44 @@ class HeadacheModel extends ChangeNotifier {
   }
 }
 
-// IDEA: have a "timestamp" data type. Different types of timestamps: advil, Icepack, etc..
-List<HeadacheEvent> _initSeedData() {
-  List<HeadacheEvent> data = [];
-  data.add(
-    HeadacheEvent(
-      id: 1,
-      intensity: 3,
-      occurenceDate: DateTime.now(),
-      numAdvilTaken: 2,
-      notes: 'decent pain. Localized on left side',
+List<Headache> _initSeedData() {
+  List<Headache> data = [];
+
+  var h1 = Headache(
+    id: 1,
+    intensity: 3,
+    occurenceDate: DateTime.now(),
+    notes: 'decent pain. Localized on left side',
+  );
+  h1.timestamps.add(
+    Timestamp(time: TimeOfDay(hour: 15, minute: 32), type: TimestampType.advil),
+  );
+  h1.timestamps.add(
+    Timestamp(time: TimeOfDay(hour: 9, minute: 01), type: TimestampType.advil),
+  );
+  h1.timestamps.add(
+    Timestamp(
+      time: TimeOfDay(hour: 16, minute: 42),
+      type: TimestampType.icePack,
     ),
   );
-  data.add(
-    HeadacheEvent(
-      id: 2,
-      intensity: 5,
-      occurenceDate: DateTime.now(),
-      numAdvilTaken: 4,
-      notes: 'bad pain in center of head. took 3 advil, then 1 more hour later',
+
+  var h2 = Headache(
+    id: 2,
+    intensity: 5,
+    occurenceDate: DateTime.now(),
+    notes: 'bad pain in center of head. took 3 advil, then 1 more hour later',
+  );
+  h2.timestamps.add(
+    Timestamp(
+      time: TimeOfDay(hour: 3, minute: 59),
+      type: TimestampType.icePack,
     ),
   );
-  data.add(
-    HeadacheEvent(
-      id: 3,
-      intensity: 1,
-      occurenceDate: DateTime.now(),
-      numAdvilTaken: 1,
-      notes: 'minor pain.',
-    ),
+  h2.timestamps.add(
+    Timestamp(time: TimeOfDay(hour: 22, minute: 26), type: TimestampType.advil),
   );
-  data.add(
-    HeadacheEvent(
-      id: 4,
-      intensity: 4,
-      occurenceDate: DateTime.now(),
-      numAdvilTaken: 3,
-      notes: 'bad pain. Localized on back right side',
-    ),
-  );
+  data.add(h1);
+  data.add(h2);
   return data;
 }
