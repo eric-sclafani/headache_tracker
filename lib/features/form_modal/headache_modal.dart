@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:headache_tracker/providers/headache_model.dart';
-import 'package:headache_tracker/widgets/headache_form.dart';
+import 'package:headache_tracker/features/form_modal/headache_form.dart';
 import 'package:provider/provider.dart';
 
-class FormDialog extends StatelessWidget {
+class HeadacheModal extends StatelessWidget {
   final String mode;
 
-  const FormDialog({super.key, required this.mode});
+  const HeadacheModal({super.key, required this.mode});
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +31,7 @@ Future<void> showAddEditDialog({
     barrierColor: Colors.black54,
     transitionDuration: const Duration(milliseconds: 300),
     pageBuilder: (context, animation, secondaryAnimation) {
-      return FormDialog(mode: mode);
+      return HeadacheModal(mode: mode);
     },
     transitionBuilder: (context, animation, secondaryAnimation, child) {
       return ScaleTransition(

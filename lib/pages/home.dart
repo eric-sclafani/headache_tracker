@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:headache_tracker/widgets/form_dialog.dart';
-import 'package:headache_tracker/widgets/headache_list.dart';
+import 'package:headache_tracker/features/form_modal/headache_modal.dart';
+import 'package:headache_tracker/features/headache_list_display/headache_list.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});

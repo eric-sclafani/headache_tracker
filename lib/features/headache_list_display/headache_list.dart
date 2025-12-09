@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:headache_tracker/models/headache.dart';
 import 'package:headache_tracker/providers/headache_model.dart';
 import 'package:headache_tracker/utils/datetime_formatter.dart';
-import 'package:headache_tracker/widgets/detail_dialog.dart';
+import 'package:headache_tracker/features/detail_modal/detail_modal.dart';
 import 'package:provider/provider.dart';
 
 class HeadacheList extends StatelessWidget {

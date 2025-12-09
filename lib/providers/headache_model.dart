@@ -22,7 +22,7 @@ class HeadacheModel extends ChangeNotifier {
 
   int _getLatestId() {
     var h = maxBy(_headaches, (h) => h.id);
-    return h != null ? h.id + 1 : 0;
+    return h != null ? h.id + 1 : 1;
   }
 }
 
@@ -36,13 +36,22 @@ List<Headache> _initSeedData() {
     notes: 'decent pain. Localized on left side',
   );
   h1.timestamps.add(
-    Timestamp(time: TimeOfDay(hour: 15, minute: 32), type: TimestampType.advil),
-  );
-  h1.timestamps.add(
-    Timestamp(time: TimeOfDay(hour: 9, minute: 01), type: TimestampType.advil),
+    Timestamp(
+      id: 1,
+      time: TimeOfDay(hour: 15, minute: 32),
+      type: TimestampType.advil,
+    ),
   );
   h1.timestamps.add(
     Timestamp(
+      id: 2,
+      time: TimeOfDay(hour: 9, minute: 01),
+      type: TimestampType.advil,
+    ),
+  );
+  h1.timestamps.add(
+    Timestamp(
+      id: 3,
       time: TimeOfDay(hour: 16, minute: 42),
       type: TimestampType.icePack,
     ),
@@ -56,12 +65,17 @@ List<Headache> _initSeedData() {
   );
   h2.timestamps.add(
     Timestamp(
+      id: 1,
       time: TimeOfDay(hour: 3, minute: 59),
       type: TimestampType.icePack,
     ),
   );
   h2.timestamps.add(
-    Timestamp(time: TimeOfDay(hour: 22, minute: 26), type: TimestampType.advil),
+    Timestamp(
+      id: 2,
+      time: TimeOfDay(hour: 22, minute: 26),
+      type: TimestampType.advil,
+    ),
   );
   data.add(h1);
   data.add(h2);

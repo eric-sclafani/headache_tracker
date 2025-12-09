@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:headache_tracker/enums/timestamp_type.dart';
 import 'package:headache_tracker/models/timestamp.dart';
 import 'package:headache_tracker/utils/datetime_formatter.dart';
@@ -23,4 +24,9 @@ class Headache {
 
   int get totalIcepacks =>
       timestamps.where((t) => t.type == TimestampType.icePack).length;
+
+  int get latestTimestampId {
+    var t = maxBy(timestamps, (t) => t.id);
+    return t != null ? t.id + 1 : 1;
+  }
 }
