@@ -38,7 +38,7 @@ class _HeadacheFormState extends State<HeadacheForm> {
           ),
           padding: EdgeInsets.all(16),
           child: Column(
-            spacing: 20,
+            spacing: 12,
             children: [
               OccurenceDateInput(headacheForm: _headacheForm, context: context),
               IntensityInput(headacheForm: _headacheForm),
@@ -54,7 +54,7 @@ class _HeadacheFormState extends State<HeadacheForm> {
 
   Row _dialogButtons(BuildContext context, HeadacheModel headacheModel) {
     return Row(
-      spacing: 30,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         ElevatedButton(
           onPressed: () {

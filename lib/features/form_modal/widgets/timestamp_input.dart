@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:headache_tracker/enums/timestamp_type.dart';
+import 'package:headache_tracker/models/timestamp.dart';
 import 'package:headache_tracker/utils/string_extensions.dart';
 
 class TimestampInput extends StatefulWidget {
+  // final void addHeadacheTimestampsCallback;
+
   const TimestampInput({super.key});
 
   @override
@@ -10,36 +13,60 @@ class TimestampInput extends StatefulWidget {
 }
 
 class _TimestampInputState extends State<TimestampInput> {
+  final List<Timestamp> _timestamps = [];
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text('Enter timestamps:'),
-        Row(
-          spacing: 10,
-          children: [_timestampTypeDropdown(), _timeSelectBtn(context)],
+        _newTimestampBtn(),
+        SizedBox(
+          width: 250,
+          height: 250,
+          child: ListView.builder(
+            padding: const EdgeInsets.all(5),
+            itemCount: _timestamps.length,
+            itemBuilder: (BuildContext context, int index) {
+              Timestamp? timestamp = _timestamps[index];
+              return Row(
+                spacing: 5,
+                children: [
+                  _timestampTypeDropdown(timestamp),
+                  Icon(Icons.alternate_email),
+                  _timeSelectBtn(context, timestamp),
+                ],
+              );
+            },
+          ),
         ),
       ],
     );
   }
 
-  ElevatedButton _timeSelectBtn(BuildContext context) {
-    TimeOfDay? _selectedTime;
-    return ElevatedButton(
-      onPressed: () async => _selectedTime = await _selectTime(context),
-      child: Text('Select Time'),
+  ElevatedButton _newTimestampBtn() {
+    return ElevatedButton.icon(
+      onPressed: () {
+        var newTimestamp = Timestamp(
+          id: 0,
+          time: TimeOfDay.now(),
+          type: TimestampType.advil,
+        );
+        setState(() {
+          _timestamps.add(newTimestamp);
+        });
+      },
+      label: Text('New Timestamp'),
+      icon: Icon(Icons.add),
     );
   }
 
-  DropdownButton<TimestampType> _timestampTypeDropdown() {
-    var dropdownValue = TimestampType.advil;
+  DropdownButton<TimestampType> _timestampTypeDropdown(Timestamp timestamp) {
     return DropdownButton(
-      icon: Icon(Icons.alternate_email),
-      value: dropdownValue,
+      value: timestamp?.type,
       onChanged: (value) {
         setState(() {
           if (value != null) {
-            dropdownValue = value;
+            timestamp.type = value;
           }
         });
       },
@@ -51,6 +78,20 @@ class _TimestampInputState extends State<TimestampInput> {
           child: Text(t.name.toCapitalized()),
         );
       }).toList(),
+    );
+  }
+
+  ElevatedButton _timeSelectBtn(BuildContext context, Timestamp timestamp) {
+    return ElevatedButton(
+      onPressed: () async {
+        var t = await _selectTime(context);
+        if (t != null) {
+          setState(() {
+            timestamp.time = t;
+          });
+        }
+      },
+      child: Text(timestamp.formattedTime),
     );
   }
 
