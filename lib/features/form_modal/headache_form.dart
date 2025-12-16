@@ -43,7 +43,9 @@ class _HeadacheFormState extends State<HeadacheForm> {
               OccurenceDateInput(headacheForm: _headacheForm, context: context),
               IntensityInput(headacheForm: _headacheForm),
               NotesInput(headacheForm: _headacheForm),
-              TimestampInput(),
+              TimestampInput(
+                callback: (timestamps) => _headacheForm.timestamps = timestamps,
+              ),
               _dialogButtons(context, headacheModel),
             ],
           ),

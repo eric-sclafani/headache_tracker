@@ -3,10 +3,12 @@ import 'package:headache_tracker/enums/timestamp_type.dart';
 import 'package:headache_tracker/models/timestamp.dart';
 import 'package:headache_tracker/utils/string_extensions.dart';
 
-class TimestampInput extends StatefulWidget {
-  // final void addHeadacheTimestampsCallback;
+typedef TimestampsCallback = void Function(List<Timestamp> timestamps);
 
-  const TimestampInput({super.key});
+class TimestampInput extends StatefulWidget {
+  final TimestampsCallback callback;
+
+  const TimestampInput({super.key, required this.callback});
 
   @override
   State<TimestampInput> createState() => _TimestampInputState();
@@ -62,11 +64,12 @@ class _TimestampInputState extends State<TimestampInput> {
 
   DropdownButton<TimestampType> _timestampTypeDropdown(Timestamp timestamp) {
     return DropdownButton(
-      value: timestamp?.type,
+      value: timestamp.type,
       onChanged: (value) {
         setState(() {
           if (value != null) {
             timestamp.type = value;
+            widget.callback(_timestamps);
           }
         });
       },
@@ -88,6 +91,7 @@ class _TimestampInputState extends State<TimestampInput> {
         if (t != null) {
           setState(() {
             timestamp.time = t;
+            widget.callback(_timestamps);
           });
         }
       },

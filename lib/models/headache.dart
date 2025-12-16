@@ -8,7 +8,7 @@ class Headache {
   int intensity;
   DateTime occurenceDate;
   String? notes;
-  final List<Timestamp> timestamps = [];
+  List<Timestamp> timestamps = [];
 
   Headache({
     required this.id,
