@@ -29,4 +29,10 @@ class Headache {
     var t = maxBy(timestamps, (t) => t.id);
     return t != null ? t.id + 1 : 1;
   }
+
+  List<Timestamp> get sortedTimestamps {
+    var ts = timestamps;
+    ts.sort((a, b) => a.time.compareTo(b.time));
+    return ts;
+  }
 }

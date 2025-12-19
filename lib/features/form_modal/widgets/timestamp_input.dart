@@ -55,6 +55,7 @@ class _TimestampInputState extends State<TimestampInput> {
         );
         setState(() {
           _timestamps.add(newTimestamp);
+          widget.callback(_timestamps);
         });
       },
       label: Text('New Timestamp'),

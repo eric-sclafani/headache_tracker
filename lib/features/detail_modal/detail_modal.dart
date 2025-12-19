@@ -1,16 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:headache_tracker/features/detail_modal/widgets/subheader.dart';
+import 'package:headache_tracker/features/detail_modal/widgets/timestamp_display.dart';
 import 'package:headache_tracker/models/headache.dart';
-import 'package:headache_tracker/utils/string_extensions.dart';
 
-class DetailDialog extends StatelessWidget {
+class DetailDialog extends StatefulWidget {
   final Headache inputHeadache;
 
   const DetailDialog({super.key, required this.inputHeadache});
 
   @override
+  State<DetailDialog> createState() => _DetailDialogState();
+}
+
+class _DetailDialogState extends State<DetailDialog> {
+  final ScrollController _notesScrollController = ScrollController();
+
+  @override
+  void dispose() {
+    _notesScrollController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Details', textAlign: TextAlign.center),
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        spacing: 10,
+        children: [
+          const Icon(Icons.date_range_rounded),
+          Text(widget.inputHeadache.formattedDate),
+        ],
+      ),
       content: _dialogContent(),
       actionsAlignment: MainAxisAlignment.center,
       actions: [
@@ -22,37 +43,35 @@ class DetailDialog extends StatelessWidget {
     );
   }
 
-  Column _dialogContent() {
+  Widget _dialogContent() {
     return Column(
       spacing: 10,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text('Date: ${inputHeadache.formattedDate}'),
-        Text('Intensity: ${inputHeadache.intensity}'),
-        Text('Notes: ${inputHeadache.notes}'),
-        Text('Total advils: ${inputHeadache.totalAdvils}'),
-        Text('Total icepacks: ${inputHeadache.totalIcepacks}'),
-        _timestampsDisplay(),
+        SubHeader(inputHeadache: widget.inputHeadache),
+        _notesDisplay(),
+        TimestampDisplay(timestamps: widget.inputHeadache.sortedTimestamps),
       ],
     );
   }
 
-  Widget _timestampsDisplay() {
-    var items = inputHeadache.timestamps;
-    return SizedBox(
-      width: 300,
-      height: 500,
-      child: ListView.separated(
-        itemBuilder: (BuildContext context, int index) {
-          return ListTile(
-            title: Text(
-              '${items[index].type.name.toCapitalized()} @ ${items[index].formattedTime}',
-            ),
-            subtitle: Text('This is a subtitle'),
-          );
-        },
-        separatorBuilder: (BuildContext context, int index) => const Divider(),
-        itemCount: items.length,
+  Widget _notesDisplay() {
+    return Flexible(
+      child: Scrollbar(
+        thumbVisibility: true,
+        controller: _notesScrollController,
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(width: 2, color: Colors.black.withAlpha(50)),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          padding: EdgeInsets.all(10),
+          child: SingleChildScrollView(
+            controller: _notesScrollController,
+            scrollDirection: Axis.vertical,
+            child: Text(widget.inputHeadache.notes ?? ''),
+          ),
+        ),
       ),
     );
   }
