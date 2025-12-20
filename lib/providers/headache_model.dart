@@ -32,7 +32,7 @@ List<Headache> _initSeedData() {
   var h1 = Headache(
     id: 1,
     intensity: 3,
-    occurenceDate: DateTime.now(),
+    occurenceDate: DateTime(2025, 12, 23),
     notes:
         'decent pain. Localized on left side. decent pain. Localized on left side. decent pain. Localized on left side. decent pain. Localized on left side. decent pain. Localized on left side. decent pain. Localized on left side. decent pain. Localized on left side. decent pain. Localized on left side. decent pain. Localized on left side. decent pain. Localized on left side.decent pain. Localized on left side.decent pain. Localized on left side.',
   );
@@ -110,7 +110,7 @@ List<Headache> _initSeedData() {
   var h2 = Headache(
     id: 2,
     intensity: 5,
-    occurenceDate: DateTime.now(),
+    occurenceDate: DateTime(2025, 11, 3),
     notes: 'bad pain in center of head. took 3 advil, then 1 more hour later',
   );
   h2.timestamps.add(
@@ -127,7 +127,10 @@ List<Headache> _initSeedData() {
       type: TimestampType.advil,
     ),
   );
+
+  var h3 = Headache(id: 3, intensity: 1, occurenceDate: DateTime(2025, 10, 11));
   data.add(h1);
   data.add(h2);
+  data.add(h3);
   return data;
 }

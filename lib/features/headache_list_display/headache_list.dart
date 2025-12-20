@@ -27,12 +27,38 @@ class HeadacheList extends StatelessWidget {
 
   ListTile _headacheItem(BuildContext context, Headache item) {
     var title = DateTimeFormatter.formatDate(item.occurenceDate);
-    var subTitle =
-        'Intensity: ${item.intensity} | Timestamps: ${item.timestamps.length}';
     return ListTile(
-      leading: Icon(Icons.menu),
+      leading: Icon(Icons.menu, size: 35),
       title: Text(title),
-      subtitle: Text(subTitle),
+      subtitle: Row(
+        spacing: 10,
+        children: [
+          Column(
+            children: [
+              Row(
+                spacing: 5,
+                children: [
+                  const Icon(Icons.electric_bolt, size: 20),
+                  const Text('Intensity:'),
+                  Text(item.intensity.toString()),
+                ],
+              ),
+            ],
+          ),
+          Column(
+            children: [
+              Row(
+                spacing: 5,
+                children: [
+                  const Icon(Icons.event_note, size: 20),
+                  const Text('Timestamps:'),
+                  Text(item.timestamps.length.toString()),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
       onTap: () {
         showDetailDialog(context: context, headache: item);
       },
