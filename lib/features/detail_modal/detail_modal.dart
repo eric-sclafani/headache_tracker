@@ -69,7 +69,14 @@ class _DetailDialogState extends State<DetailDialog> {
           child: SingleChildScrollView(
             controller: _notesScrollController,
             scrollDirection: Axis.vertical,
-            child: Text(widget.inputHeadache.notes ?? ''),
+            child:
+                widget.inputHeadache.notes != null &&
+                    widget.inputHeadache.notes!.isNotEmpty
+                ? Text(widget.inputHeadache.notes!)
+                : Text(
+                    'No notes added',
+                    style: TextStyle(fontStyle: FontStyle.italic),
+                  ),
           ),
         ),
       ),

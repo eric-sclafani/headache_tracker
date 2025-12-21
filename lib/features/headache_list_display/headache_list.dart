@@ -12,15 +12,22 @@ class HeadacheList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<HeadacheModel>(
       builder: (context, headacheModel, _) => Expanded(
-        child: ListView.separated(
-          itemCount: headacheModel.allHeadaches.length,
-          separatorBuilder: (BuildContext context, int index) =>
-              const Divider(),
-          itemBuilder: (context, index) {
-            var item = headacheModel.allHeadaches[index];
-            return _headacheItem(context, item);
-          },
-        ),
+        child: headacheModel.allHeadaches.isEmpty
+            ? Center(
+                child: const Text(
+                  'No entries added',
+                  style: TextStyle(fontStyle: FontStyle.italic, fontSize: 25),
+                ),
+              )
+            : ListView.separated(
+                itemCount: headacheModel.allHeadaches.length,
+                separatorBuilder: (BuildContext context, int index) =>
+                    const Divider(),
+                itemBuilder: (context, index) {
+                  var item = headacheModel.allHeadaches[index];
+                  return _headacheItem(context, item);
+                },
+              ),
       ),
     );
   }
