@@ -35,35 +35,17 @@ class HeadacheList extends StatelessWidget {
   ListTile _headacheItem(BuildContext context, Headache item) {
     var title = DateTimeFormatter.formatDate(item.occurenceDate);
     return ListTile(
-      leading: Icon(Icons.menu, size: 35),
+      leading: Icon(Icons.menu, size: 25),
       title: Text(title),
       subtitle: Row(
         spacing: 10,
         children: [
-          Column(
-            children: [
-              Row(
-                spacing: 5,
-                children: [
-                  const Icon(Icons.electric_bolt, size: 20),
-                  const Text('Intensity:'),
-                  Text(item.intensity.toString()),
-                ],
-              ),
-            ],
+          _displayColumn(Icons.electric_bolt, item.intensity.toString()),
+          _displayColumn(
+            Icons.medication_outlined,
+            item.totalAdvils.toString(),
           ),
-          Column(
-            children: [
-              Row(
-                spacing: 5,
-                children: [
-                  const Icon(Icons.event_note, size: 20),
-                  const Text('Timestamps:'),
-                  Text(item.timestamps.length.toString()),
-                ],
-              ),
-            ],
-          ),
+          _displayColumn(Icons.ac_unit, item.totalIcepacks.toString()),
         ],
       ),
       onTap: () {
@@ -71,4 +53,12 @@ class HeadacheList extends StatelessWidget {
       },
     );
   }
+}
+
+Column _displayColumn(IconData icon, String text) {
+  return Column(
+    children: [
+      Row(spacing: 5, children: [Icon(icon, size: 20), Text(text)]),
+    ],
+  );
 }

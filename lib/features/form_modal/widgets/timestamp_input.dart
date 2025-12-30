@@ -24,14 +24,15 @@ class _TimestampInputState extends State<TimestampInput> {
         _newTimestampBtn(),
         SizedBox(
           width: 250,
-          height: 250,
+          height: 150,
           child: ListView.builder(
             padding: const EdgeInsets.all(5),
             itemCount: _timestamps.length,
             itemBuilder: (BuildContext context, int index) {
               Timestamp? timestamp = _timestamps[index];
               return Row(
-                spacing: 5,
+                spacing: 3,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _timestampTypeDropdown(timestamp),
                   Icon(Icons.alternate_email),

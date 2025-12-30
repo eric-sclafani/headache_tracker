@@ -24,6 +24,7 @@ class _DetailDialogState extends State<DetailDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      insetPadding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 55.0),
       title: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         spacing: 10,
@@ -32,7 +33,7 @@ class _DetailDialogState extends State<DetailDialog> {
           Text(widget.inputHeadache.formattedDate),
         ],
       ),
-      content: _dialogContent(),
+      content: SafeArea(top: false, child: _dialogContent()),
       actionsAlignment: MainAxisAlignment.center,
       actions: [
         ElevatedButton(
@@ -45,7 +46,7 @@ class _DetailDialogState extends State<DetailDialog> {
 
   Widget _dialogContent() {
     return Column(
-      spacing: 10,
+      spacing: 5,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SubHeader(inputHeadache: widget.inputHeadache),

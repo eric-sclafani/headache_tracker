@@ -28,23 +28,34 @@ class _HeadacheFormState extends State<HeadacheForm> {
     return Consumer<HeadacheModel>(
       builder: (context, headacheModel, _) => Form(
         key: _formKey,
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border(
-              left: BorderSide(color: Colors.blue, width: 0.8),
-              right: BorderSide(color: Colors.blue, width: 0.8),
-            ),
-            borderRadius: BorderRadius.circular(14.0),
-          ),
-          padding: EdgeInsets.all(16),
+        child: SingleChildScrollView(
           child: Column(
-            spacing: 12,
+            spacing: 7,
             children: [
-              OccurenceDateInput(headacheForm: _headacheForm, context: context),
-              IntensityInput(headacheForm: _headacheForm),
-              NotesInput(headacheForm: _headacheForm),
-              TimestampInput(
-                callback: (timestamps) => _headacheForm.timestamps = timestamps,
+              Container(
+                padding: EdgeInsets.only(left: 14, right: 14),
+                decoration: BoxDecoration(
+                  border: Border(
+                    left: BorderSide(color: Colors.blue, width: 0.8),
+                    right: BorderSide(color: Colors.blue, width: 0.8),
+                  ),
+                  borderRadius: BorderRadius.circular(14.0),
+                ),
+                child: Column(
+                  spacing: 10,
+                  children: [
+                    OccurenceDateInput(
+                      headacheForm: _headacheForm,
+                      context: context,
+                    ),
+                    IntensityInput(headacheForm: _headacheForm),
+                    NotesInput(headacheForm: _headacheForm),
+                    TimestampInput(
+                      callback: (timestamps) =>
+                          _headacheForm.timestamps = timestamps,
+                    ),
+                  ],
+                ),
               ),
               _dialogButtons(context, headacheModel),
             ],
@@ -56,7 +67,7 @@ class _HeadacheFormState extends State<HeadacheForm> {
 
   Row _dialogButtons(BuildContext context, HeadacheModel headacheModel) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         ElevatedButton(
           onPressed: () {

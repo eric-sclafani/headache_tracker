@@ -129,8 +129,8 @@ List<Headache> _initSeedData() {
   );
 
   var h3 = Headache(id: 3, intensity: 1, occurenceDate: DateTime(2025, 10, 11));
-  // data.add(h1);
-  // data.add(h2);
-  // data.add(h3);
+  data.add(h1);
+  data.add(h2);
+  data.add(h3);
   return data;
 }

@@ -25,7 +25,7 @@ class _TimestampDisplayState extends State<TimestampDisplay> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 300,
-      height: 350,
+      height: 250,
       child: Scrollbar(
         thumbVisibility: true,
         controller: _scrollController,

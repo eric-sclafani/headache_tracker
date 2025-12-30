@@ -11,7 +11,7 @@ class NotesInput extends StatelessWidget {
       decoration: InputDecoration(labelText: "Notes"),
       maxLines: 3,
       maxLength: 250,
-      keyboardType: TextInputType.multiline,
+      keyboardType: TextInputType.text,
       onSaved: (value) => headacheForm.notes = value,
     );
   }

@@ -12,11 +12,12 @@ class HeadacheModal extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<HeadacheModel>(
       builder: (context, headacheModel, _) => AlertDialog(
+        insetPadding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 55.0),
         title: Text(
           mode == 'add' ? 'Add new' : 'Editing',
           textAlign: TextAlign.center,
         ),
-        content: HeadacheForm(),
+        content: SafeArea(child: HeadacheForm()),
       ),
     );
   }
