@@ -40,7 +40,7 @@ class _HomeState extends State<Home> {
     return AppBar(
       centerTitle: true,
       title: const Text(
-        'Headache Tracker',
+        'My Headaches',
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
       ),
       forceMaterialTransparency: true,

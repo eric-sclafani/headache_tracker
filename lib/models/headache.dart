@@ -35,4 +35,13 @@ class Headache {
     ts.sort((a, b) => a.time.compareTo(b.time));
     return ts;
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'intensity': intensity,
+      'occurenceDate': occurenceDate,
+      'notes': notes,
+    };
+  }
 }

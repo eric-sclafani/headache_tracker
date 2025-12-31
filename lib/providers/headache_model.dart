@@ -128,9 +128,24 @@ List<Headache> _initSeedData() {
     ),
   );
 
-  var h3 = Headache(id: 3, intensity: 1, occurenceDate: DateTime(2025, 10, 11));
+  var h3 = Headache(id: 3, intensity: 1, occurenceDate: DateTime(2024, 10, 11));
+  var h4 = Headache(
+    id: 4,
+    intensity: 5,
+    occurenceDate: DateTime(2024, 3, 24),
+    notes: 'bad pain in center of head. took 3 advil, then 1 more hour later',
+  );
+  h4.timestamps.add(
+    Timestamp(
+      id: 1,
+      time: TimeOfDay(hour: 6, minute: 10),
+      type: TimestampType.icePack,
+    ),
+  );
+
   data.add(h1);
   data.add(h2);
   data.add(h3);
+  data.add(h4);
   return data;
 }
