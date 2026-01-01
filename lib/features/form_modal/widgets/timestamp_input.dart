@@ -53,6 +53,7 @@ class _TimestampInputState extends State<TimestampInput> {
           id: 0,
           time: TimeOfDay.now(),
           type: TimestampType.advil,
+          headacheId: 0,
         );
         setState(() {
           _timestamps.add(newTimestamp);

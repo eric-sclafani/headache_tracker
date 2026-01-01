@@ -44,4 +44,13 @@ class Headache {
       'notes': notes,
     };
   }
+
+  factory Headache.fromMap(Map<String, dynamic> map) {
+    return Headache(
+      id: map['id'] as int,
+      intensity: map['intensity'] as int,
+      occurenceDate: map['occurenceDate'] as DateTime,
+      notes: map['notes'] as String,
+    );
+  }
 }

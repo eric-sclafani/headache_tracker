@@ -6,6 +6,7 @@ import 'package:headache_tracker/theme/app_theme.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MainApp());
 }
 
