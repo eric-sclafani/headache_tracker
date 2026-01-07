@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:headache_tracker/data/repositories/timestamp_repository.dart';
 import 'package:headache_tracker/features/detail_modal/widgets/subheader.dart';
 import 'package:headache_tracker/features/detail_modal/widgets/timestamp_display.dart';
 import 'package:headache_tracker/models/headache.dart';
+import 'package:provider/provider.dart';
 
 class DetailDialog extends StatefulWidget {
   final Headache inputHeadache;
@@ -14,6 +16,12 @@ class DetailDialog extends StatefulWidget {
 
 class _DetailDialogState extends State<DetailDialog> {
   final ScrollController _notesScrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<TimestampRepository>().loadTimestamps(widget.inputHeadache.id);
+  }
 
   @override
   void dispose() {
@@ -30,7 +38,7 @@ class _DetailDialogState extends State<DetailDialog> {
         spacing: 10,
         children: [
           const Icon(Icons.date_range_rounded),
-          Text(widget.inputHeadache.formattedDate),
+          Text(widget.inputHeadache.occurenceDate),
         ],
       ),
       content: SafeArea(top: false, child: _dialogContent()),
@@ -45,13 +53,14 @@ class _DetailDialogState extends State<DetailDialog> {
   }
 
   Widget _dialogContent() {
+    final repo = context.watch<TimestampRepository>();
     return Column(
       spacing: 5,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SubHeader(inputHeadache: widget.inputHeadache),
         _notesDisplay(),
-        TimestampDisplay(timestamps: widget.inputHeadache.sortedTimestamps),
+        TimestampDisplay(timestamps: repo.timestamps),
       ],
     );
   }

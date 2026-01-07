@@ -19,7 +19,11 @@ class SubHeader extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.electric_bolt, size: 20),
+              Icon(
+                Icons.electric_bolt,
+                size: 20,
+                color: Colors.yellow.shade800,
+              ),
               const Text(
                 'Intensity: ',
                 style: TextStyle(fontWeight: FontWeight.bold),
@@ -36,7 +40,11 @@ class SubHeader extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.medication_outlined, size: 20),
+                      Icon(
+                        Icons.medication_outlined,
+                        size: 20,
+                        color: Colors.lightGreen.shade800,
+                      ),
                       const Text(
                         'Advils: ',
                         style: TextStyle(fontWeight: FontWeight.bold),
@@ -51,7 +59,11 @@ class SubHeader extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Icons.ac_unit, size: 20),
+                      Icon(
+                        Icons.ac_unit,
+                        size: 20,
+                        color: Colors.lightBlue.shade800,
+                      ),
                       const Text(
                         'Ice packs: ',
                         style: TextStyle(fontWeight: FontWeight.bold),

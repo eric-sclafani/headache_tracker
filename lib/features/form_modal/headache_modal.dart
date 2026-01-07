@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:headache_tracker/providers/headache_model.dart';
 import 'package:headache_tracker/features/form_modal/headache_form.dart';
-import 'package:provider/provider.dart';
 
 class HeadacheModal extends StatelessWidget {
   final String mode;
@@ -10,15 +8,13 @@ class HeadacheModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<HeadacheModel>(
-      builder: (context, headacheModel, _) => AlertDialog(
-        insetPadding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 55.0),
-        title: Text(
-          mode == 'add' ? 'Add new' : 'Editing',
-          textAlign: TextAlign.center,
-        ),
-        content: SafeArea(child: HeadacheForm()),
+    return AlertDialog(
+      insetPadding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 55.0),
+      title: Text(
+        mode == 'add' ? 'Add new' : 'Editing',
+        textAlign: TextAlign.center,
       ),
+      content: SafeArea(child: HeadacheForm()),
     );
   }
 }

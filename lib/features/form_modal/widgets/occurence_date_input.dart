@@ -42,8 +42,9 @@ class _OccurenceDateInputState extends State<OccurenceDateInput> {
           onPressed: () async {
             var date = await _selectDate(context);
             if (date != null) {
-              _dateController.text = DateTimeFormatter.formatDate(date);
-              widget.headacheForm.occurenceDate = date;
+              var formattedDate = DateTimeFormatter.formatDate(date);
+              _dateController.text = formattedDate;
+              widget.headacheForm.occurenceDate = formattedDate;
             }
           },
         ),

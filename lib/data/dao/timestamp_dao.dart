@@ -10,9 +10,13 @@ class TimestampDao {
     return db.insert(TimestampTable.table, t.toMap());
   }
 
-  Future<void> delete(int id) async {
+  Future<void> delete(int headacheId) async {
     final db = await _db.database;
-    await db.delete(TimestampTable.table, where: 'id = ?', whereArgs: [id]);
+    await db.delete(
+      TimestampTable.table,
+      where: 'headacheId = ?',
+      whereArgs: [headacheId],
+    );
   }
 
   Future<List<Timestamp>> getAll(int headacheId) async {
@@ -22,6 +26,7 @@ class TimestampDao {
       where: 'headacheId = ?',
       whereArgs: [headacheId],
     );
+
     return result.map(Timestamp.fromMap).toList();
   }
 }

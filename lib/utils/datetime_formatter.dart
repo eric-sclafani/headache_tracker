@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class DateTimeFormatter {
@@ -9,7 +8,7 @@ class DateTimeFormatter {
     return _dateFormat.format(date);
   }
 
-  static String formatTime(TimeOfDay time) {
+  static String formatTime(DateTime time) {
     var d = DateTime(2000, 1, 1, time.hour, time.minute);
     return _timeFormat.format(d);
   }

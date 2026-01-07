@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:headache_tracker/enums/timestamp_type.dart';
 import 'package:headache_tracker/models/timestamp.dart';
+import 'package:headache_tracker/utils/datetime_formatter.dart';
 import 'package:headache_tracker/utils/string_extensions.dart';
 
 typedef TimestampsCallback = void Function(List<Timestamp> timestamps);
@@ -51,7 +52,7 @@ class _TimestampInputState extends State<TimestampInput> {
       onPressed: () {
         var newTimestamp = Timestamp(
           id: 0,
-          time: TimeOfDay.now(),
+          time: DateTimeFormatter.formatTime(DateTime.now()),
           type: TimestampType.advil,
           headacheId: 0,
         );
@@ -92,13 +93,14 @@ class _TimestampInputState extends State<TimestampInput> {
       onPressed: () async {
         var t = await _selectTime(context);
         if (t != null) {
+          var newTime = DateTime(2000, 1, 1, t.hour, t.minute);
           setState(() {
-            timestamp.time = t;
+            timestamp.time = DateTimeFormatter.formatTime(newTime);
             widget.callback(_timestamps);
           });
         }
       },
-      child: Text(timestamp.formattedTime),
+      child: Text(timestamp.time),
     );
   }
 

@@ -1,10 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:headache_tracker/enums/timestamp_type.dart';
-import 'package:headache_tracker/utils/datetime_formatter.dart';
 
 class Timestamp {
   int id;
-  TimeOfDay time;
+  String time;
   TimestampType type;
   int headacheId;
 
@@ -14,8 +12,6 @@ class Timestamp {
     required this.type,
     required this.headacheId,
   });
-
-  String get formattedTime => DateTimeFormatter.formatTime(time);
 
   Map<String, dynamic> toMap() {
     return {
@@ -29,7 +25,7 @@ class Timestamp {
   factory Timestamp.fromMap(Map<String, dynamic> map) {
     return Timestamp(
       id: map['id'] as int,
-      time: map['time'] as TimeOfDay,
+      time: map['time'] as String,
       type: map['type'] as TimestampType,
       headacheId: map['headacheId'] as int,
     );

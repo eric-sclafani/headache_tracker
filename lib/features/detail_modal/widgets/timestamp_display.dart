@@ -42,9 +42,7 @@ class _TimestampDisplayState extends State<TimestampDisplay> {
                         ? Icons.medication_outlined
                         : Icons.ac_unit,
                   ),
-                  Text(
-                    '${item.type.name.toCapitalized()} @ ${item.formattedTime}',
-                  ),
+                  Text('${item.type.name.toCapitalized()} @ ${item.time}'),
                 ],
               ),
             );
