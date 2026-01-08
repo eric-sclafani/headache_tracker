@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:headache_tracker/data/repositories/headache_repository.dart';
+import 'package:headache_tracker/features/confirm_delete_modal/confirm_modal.dart';
 import 'package:headache_tracker/models/headache.dart';
 import 'package:headache_tracker/features/detail_modal/detail_modal.dart';
 import 'package:provider/provider.dart';
@@ -41,11 +42,17 @@ class _HeadacheListState extends State<HeadacheList> {
     );
   }
 
-  ListTile _headacheItem(BuildContext context, Headache item) {
+  Widget _headacheItem(BuildContext context, Headache item) {
     var title = item.occurenceDate;
     return ListTile(
       leading: Icon(Icons.menu, size: 25),
-      title: Text(title),
+      title: SizedBox(
+        height: 18,
+        child: Text(
+          title,
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+      ),
       subtitle: Row(
         spacing: 10,
         children: [
@@ -64,7 +71,8 @@ class _HeadacheListState extends State<HeadacheList> {
             item.totalIcepacks.toString(),
             Colors.lightBlue.shade800,
           ),
-          _deleteBtn(),
+          Spacer(),
+          _deleteBtn(item),
         ],
       ),
       onTap: () {
@@ -73,16 +81,18 @@ class _HeadacheListState extends State<HeadacheList> {
     );
   }
 
-  Column _deleteBtn() {
+  Column _deleteBtn(Headache item) {
     return Column(
       children: [
         IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.delete_forever_outlined, size: 25),
+          icon: Icon(Icons.delete_forever_outlined),
           style: IconButton.styleFrom(
             backgroundColor: Colors.transparent,
-            foregroundColor: Colors.red.shade900,
+            foregroundColor: Colors.red.shade800,
           ),
+          onPressed: () {
+            showConfirmDeleteDialog(context: context, headacheId: item.id);
+          },
         ),
       ],
     );

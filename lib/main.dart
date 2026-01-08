@@ -24,7 +24,10 @@ class MainApp extends StatelessWidget {
         Provider<HeadacheDao>(create: (_) => HeadacheDao()),
         Provider<TimestampDao>(create: (_) => TimestampDao()),
         ChangeNotifierProvider<HeadacheRepository>(
-          create: (context) => HeadacheRepository(context.read<HeadacheDao>()),
+          create: (context) => HeadacheRepository(
+            context.read<HeadacheDao>(),
+            context.read<TimestampDao>(),
+          ),
         ),
         ChangeNotifierProvider<TimestampRepository>(
           create: (context) =>

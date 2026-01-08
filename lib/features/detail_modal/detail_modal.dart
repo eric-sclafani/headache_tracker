@@ -41,7 +41,7 @@ class _DetailDialogState extends State<DetailDialog> {
           Text(widget.inputHeadache.occurenceDate),
         ],
       ),
-      content: SafeArea(top: false, child: _dialogContent()),
+      content: SafeArea(top: false, child: _modalContent()),
       actionsAlignment: MainAxisAlignment.center,
       actions: [
         ElevatedButton(
@@ -52,7 +52,7 @@ class _DetailDialogState extends State<DetailDialog> {
     );
   }
 
-  Widget _dialogContent() {
+  Widget _modalContent() {
     final repo = context.watch<TimestampRepository>();
     return Column(
       spacing: 5,
