@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:headache_tracker/enums/timestamp_type.dart';
+import 'package:headache_tracker/enums/timestamp_type_enum.dart';
 import 'package:headache_tracker/models/timestamp.dart';
 import 'package:headache_tracker/utils/datetime_formatter.dart';
 import 'package:headache_tracker/utils/string_extensions.dart';
@@ -51,9 +51,8 @@ class _TimestampInputState extends State<TimestampInput> {
     return ElevatedButton.icon(
       onPressed: () {
         var newTimestamp = Timestamp(
-          id: 0,
           time: DateTimeFormatter.formatTime(DateTime.now()),
-          type: TimestampType.advil,
+          type: TimestampTypeEnum.advil,
           headacheId: 0,
         );
         setState(() {
@@ -66,7 +65,9 @@ class _TimestampInputState extends State<TimestampInput> {
     );
   }
 
-  DropdownButton<TimestampType> _timestampTypeDropdown(Timestamp timestamp) {
+  DropdownButton<TimestampTypeEnum> _timestampTypeDropdown(
+    Timestamp timestamp,
+  ) {
     return DropdownButton(
       value: timestamp.type,
       onChanged: (value) {
@@ -77,10 +78,10 @@ class _TimestampInputState extends State<TimestampInput> {
           }
         });
       },
-      items: TimestampType.values.where((t) => t.name != '_').map((
-        TimestampType t,
+      items: TimestampTypeEnum.values.where((t) => t.name != '_').map((
+        TimestampTypeEnum t,
       ) {
-        return DropdownMenuItem<TimestampType>(
+        return DropdownMenuItem<TimestampTypeEnum>(
           value: t,
           child: Text(t.name.toCapitalized()),
         );

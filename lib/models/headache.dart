@@ -1,25 +1,25 @@
-import 'package:headache_tracker/enums/timestamp_type.dart';
+import 'package:headache_tracker/enums/timestamp_type_enum.dart';
 import 'package:headache_tracker/models/timestamp.dart';
 
 class Headache {
-  int id;
+  int? id;
   int intensity;
   String occurenceDate;
   String? notes;
   List<Timestamp> timestamps = [];
 
   Headache({
-    required this.id,
+    this.id,
     required this.intensity,
     required this.occurenceDate,
     this.notes,
   });
 
   int get totalAdvils =>
-      timestamps.where((t) => t.type == TimestampType.advil).length;
+      timestamps.where((t) => t.type == TimestampTypeEnum.advil).length;
 
   int get totalIcepacks =>
-      timestamps.where((t) => t.type == TimestampType.icePack).length;
+      timestamps.where((t) => t.type == TimestampTypeEnum.icePack).length;
 
   Map<String, dynamic> toMap() {
     return {

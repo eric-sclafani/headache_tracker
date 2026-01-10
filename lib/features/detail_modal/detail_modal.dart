@@ -20,7 +20,9 @@ class _DetailDialogState extends State<DetailDialog> {
   @override
   void initState() {
     super.initState();
-    context.read<TimestampRepository>().loadTimestamps(widget.inputHeadache.id);
+    context.read<TimestampRepository>().loadTimestamps(
+      widget.inputHeadache.id!,
+    );
   }
 
   @override

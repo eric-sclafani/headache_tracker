@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:headache_tracker/enums/timestamp_type.dart';
+import 'package:headache_tracker/enums/timestamp_type_enum.dart';
 import 'package:headache_tracker/models/timestamp.dart';
 import 'package:headache_tracker/utils/string_extensions.dart';
 
@@ -38,7 +38,7 @@ class _TimestampDisplayState extends State<TimestampDisplay> {
                 spacing: 5,
                 children: [
                   Icon(
-                    item.type == TimestampType.advil
+                    item.type == TimestampTypeEnum.advil
                         ? Icons.medication_outlined
                         : Icons.ac_unit,
                   ),

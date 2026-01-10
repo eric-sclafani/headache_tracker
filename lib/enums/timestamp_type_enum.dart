@@ -1,4 +1,4 @@
-enum TimestampType {
+enum TimestampTypeEnum {
   // ignore: unused_field
   _,
   advil,

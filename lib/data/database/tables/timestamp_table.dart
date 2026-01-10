@@ -5,8 +5,7 @@ class TimestampTable {
 CREATE TABLE IF NOT EXISTS $table(
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   type TEXT NOT NULL,
-  hour INTEGER NOT NULL,
-  minute INTEGER NOT NULL,
+  time TEXT NOT NULL,
   headacheId INTEGER NOT NULL,
   FOREIGN KEY (headacheId) REFERENCES headache(id)
 )

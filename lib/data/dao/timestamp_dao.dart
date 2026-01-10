@@ -28,7 +28,7 @@ class TimestampDao {
     );
   }
 
-  Future<List<Timestamp>> getAll(int headacheId) async {
+  Future<List<Timestamp>> getAllByHeadacheId(int headacheId) async {
     final db = await _db.database;
     final result = await db.query(
       TimestampTable.table,
@@ -36,6 +36,12 @@ class TimestampDao {
       whereArgs: [headacheId],
     );
 
+    return result.map(Timestamp.fromMap).toList();
+  }
+
+  Future<List<Timestamp>> getAll() async {
+    final db = await _db.database;
+    final result = await db.query(TimestampTable.table);
     return result.map(Timestamp.fromMap).toList();
   }
 }

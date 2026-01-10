@@ -19,7 +19,6 @@ class _HeadacheFormState extends State<HeadacheForm> {
   final _formKey = GlobalKey<FormState>();
 
   final Headache _headacheForm = Headache(
-    id: 0,
     intensity: 0,
     occurenceDate: DateTimeFormatter.formatDate(DateTime.now()),
   );

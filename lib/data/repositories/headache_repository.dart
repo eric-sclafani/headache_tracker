@@ -20,11 +20,20 @@ class HeadacheRepository extends ChangeNotifier {
 
   Future<void> loadHeadaches() async {
     _headaches = await _headacheDao.getAll();
+    for (var h in _headaches) {
+      h.timestamps = await _timestampDao.getAllByHeadacheId(h.id!);
+    }
     notifyListeners();
   }
 
   Future<int> addHeadache(Headache h) async {
     var id = await _headacheDao.insert(h);
+
+    for (var timestamp in h.timestamps) {
+      timestamp.headacheId = id;
+      await _timestampDao.insert(timestamp);
+    }
+
     await loadHeadaches();
     return id;
   }

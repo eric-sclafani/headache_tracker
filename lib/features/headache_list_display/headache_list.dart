@@ -91,7 +91,7 @@ class _HeadacheListState extends State<HeadacheList> {
             foregroundColor: Colors.red.shade800,
           ),
           onPressed: () {
-            showConfirmDeleteDialog(context: context, headacheId: item.id);
+            showConfirmDeleteDialog(context: context, headacheId: item.id!);
           },
         ),
       ],

@@ -16,7 +16,7 @@ class TimestampRepository extends ChangeNotifier {
   }
 
   Future<void> loadTimestamps(int headacheId) async {
-    _timestamps = await _dao.getAll(headacheId);
+    _timestamps = await _dao.getAllByHeadacheId(headacheId);
     notifyListeners();
   }
 }

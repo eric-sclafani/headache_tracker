@@ -1,13 +1,13 @@
-import 'package:headache_tracker/enums/timestamp_type.dart';
+import 'package:headache_tracker/enums/timestamp_type_enum.dart';
 
 class Timestamp {
-  int id;
+  int? id;
   String time;
-  TimestampType type;
+  TimestampTypeEnum type;
   int headacheId;
 
   Timestamp({
-    required this.id,
+    this.id,
     required this.time,
     required this.type,
     required this.headacheId,
@@ -23,10 +23,11 @@ class Timestamp {
   }
 
   factory Timestamp.fromMap(Map<String, dynamic> map) {
+    var type = TimestampTypeEnum.values.byName(map['type']);
     return Timestamp(
       id: map['id'] as int,
       time: map['time'] as String,
-      type: map['type'] as TimestampType,
+      type: type,
       headacheId: map['headacheId'] as int,
     );
   }
