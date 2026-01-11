@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:headache_tracker/data/repositories/headache_repository.dart';
-import 'package:headache_tracker/features/confirm_delete_modal/confirm_modal.dart';
 import 'package:headache_tracker/models/headache.dart';
 import 'package:headache_tracker/features/detail_modal/detail_modal.dart';
 import 'package:provider/provider.dart';
@@ -45,7 +44,7 @@ class _HeadacheListState extends State<HeadacheList> {
   Widget _headacheItem(BuildContext context, Headache item) {
     var title = item.occurenceDate;
     return ListTile(
-      leading: Icon(Icons.menu, size: 25),
+      leading: Icon(Icons.event_note_rounded, size: 25),
       title: SizedBox(
         height: 18,
         child: Text(
@@ -71,30 +70,11 @@ class _HeadacheListState extends State<HeadacheList> {
             item.totalIcepacks.toString(),
             Colors.lightBlue.shade800,
           ),
-          Spacer(),
-          _deleteBtn(item),
         ],
       ),
       onTap: () {
         showDetailDialog(context: context, headache: item);
       },
-    );
-  }
-
-  Column _deleteBtn(Headache item) {
-    return Column(
-      children: [
-        IconButton(
-          icon: Icon(Icons.delete_forever_outlined),
-          style: IconButton.styleFrom(
-            backgroundColor: Colors.transparent,
-            foregroundColor: Colors.red.shade800,
-          ),
-          onPressed: () {
-            showConfirmDeleteDialog(context: context, headacheId: item.id!);
-          },
-        ),
-      ],
     );
   }
 

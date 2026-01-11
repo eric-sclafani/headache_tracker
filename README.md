@@ -2,10 +2,11 @@
 
 App I am making for myself to track my headaches.
 
-# Future plans
+# TODO
 
 -   Implement different views: calendar, list, table
 -   For all DB actions, add a success/error indicator to avoid code crashes
+-   Centralize all styles
 
 # Attributions
 

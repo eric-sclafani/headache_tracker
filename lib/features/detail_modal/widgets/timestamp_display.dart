@@ -37,11 +37,7 @@ class _TimestampDisplayState extends State<TimestampDisplay> {
               title: Row(
                 spacing: 5,
                 children: [
-                  Icon(
-                    item.type == TimestampTypeEnum.advil
-                        ? Icons.medication_outlined
-                        : Icons.ac_unit,
-                  ),
+                  _getDisplayIcon(item.type),
                   Text('${item.type.name.toCapitalized()} @ ${item.time}'),
                 ],
               ),
@@ -53,5 +49,12 @@ class _TimestampDisplayState extends State<TimestampDisplay> {
         ),
       ),
     );
+  }
+
+  static Icon _getDisplayIcon(TimestampTypeEnum type) {
+    if (type == TimestampTypeEnum.advil) {
+      return Icon(Icons.medication_outlined, color: Colors.lightGreen.shade800);
+    }
+    return Icon(Icons.ac_unit, color: Colors.lightBlue.shade800);
   }
 }

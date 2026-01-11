@@ -30,7 +30,7 @@ class ConfirmDeleteModal extends StatelessWidget {
         ElevatedButton(
           onPressed: () {
             repo.deleteHeadache(headacheId);
-            Navigator.pop(context);
+            Navigator.pop(context, true);
           },
           child: Text('DO IT'),
         ),
@@ -39,22 +39,16 @@ class ConfirmDeleteModal extends StatelessWidget {
   }
 }
 
-Future<void> showConfirmDeleteDialog({
+Future<bool?> showConfirmDeleteDialog({
   required BuildContext context,
   required int headacheId,
 }) {
-  return showGeneralDialog(
+  return showGeneralDialog<bool?>(
     context: context,
     barrierColor: Colors.black54,
     transitionDuration: const Duration(milliseconds: 300),
     pageBuilder: (context, animation, secondaryAnimation) {
       return ConfirmDeleteModal(headacheId: headacheId);
-    },
-    transitionBuilder: (context, animation, secondaryAnimation, child) {
-      return ScaleTransition(
-        scale: CurvedAnimation(parent: animation, curve: Curves.easeOutBack),
-        child: child,
-      );
     },
   );
 }

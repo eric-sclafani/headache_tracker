@@ -27,18 +27,15 @@ class Home extends StatelessWidget {
       onPressed: () {
         showAddEditDialog(context: context, mode: 'add');
       },
-      icon: const Icon(Icons.add_sharp, size: 60),
+      icon: const Icon(Icons.note_add, size: 50),
     );
   }
 
   AppBar _appBar() {
     return AppBar(
       centerTitle: true,
-      title: const Text(
-        'My Headaches',
-        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-      ),
       forceMaterialTransparency: true,
+      leading: IconButton(onPressed: () {}, icon: Icon(Icons.menu)),
     );
   }
 }

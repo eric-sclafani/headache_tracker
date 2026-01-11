@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:headache_tracker/data/repositories/timestamp_repository.dart';
+import 'package:headache_tracker/features/confirm_delete_modal/confirm_modal.dart';
 import 'package:headache_tracker/features/detail_modal/widgets/subheader.dart';
 import 'package:headache_tracker/features/detail_modal/widgets/timestamp_display.dart';
 import 'package:headache_tracker/models/headache.dart';
@@ -46,10 +47,12 @@ class _DetailDialogState extends State<DetailDialog> {
       content: SafeArea(top: false, child: _modalContent()),
       actionsAlignment: MainAxisAlignment.center,
       actions: [
+        _deleteBtn(widget.inputHeadache),
         ElevatedButton(
           onPressed: () => Navigator.pop(context),
           child: Text('Close'),
         ),
+        _editBtn(widget.inputHeadache),
       ],
     );
   }
@@ -94,6 +97,38 @@ class _DetailDialogState extends State<DetailDialog> {
       ),
     );
   }
+
+  Widget _editBtn(Headache item) {
+    return ElevatedButton(
+      onPressed: () {},
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.orange.shade600,
+        foregroundColor: Colors.white,
+      ),
+
+      child: Text('Edit'),
+    );
+  }
+
+  Widget _deleteBtn(Headache item) {
+    return ElevatedButton(
+      onPressed: () async {
+        final bool? deleted = await showConfirmDeleteDialog(
+          context: context,
+          headacheId: item.id!,
+        );
+        if (deleted == true && mounted) {
+          Navigator.pop(context);
+        }
+      },
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.red.shade500,
+        foregroundColor: Colors.white,
+      ),
+
+      child: Text('Delete'),
+    );
+  }
 }
 
 Future<void> showDetailDialog({
@@ -106,12 +141,6 @@ Future<void> showDetailDialog({
     transitionDuration: const Duration(milliseconds: 300),
     pageBuilder: (context, animation, secondaryAnimation) {
       return DetailDialog(inputHeadache: headache);
-    },
-    transitionBuilder: (context, animation, secondaryAnimation, child) {
-      return ScaleTransition(
-        scale: CurvedAnimation(parent: animation, curve: Curves.easeOutBack),
-        child: child,
-      );
     },
   );
 }
