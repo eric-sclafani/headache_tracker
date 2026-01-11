@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:headache_tracker/enums/timestamp_type_enum.dart';
 import 'package:headache_tracker/models/timestamp.dart';
+import 'package:headache_tracker/utils/datetime_formatter.dart';
 import 'package:headache_tracker/utils/string_extensions.dart';
 
 class TimestampDisplay extends StatefulWidget {
@@ -23,6 +24,8 @@ class _TimestampDisplayState extends State<TimestampDisplay> {
 
   @override
   Widget build(BuildContext context) {
+    var timestamps = widget.timestamps;
+    _sortTimestamps(timestamps);
     return SizedBox(
       width: 300,
       height: 250,
@@ -56,5 +59,13 @@ class _TimestampDisplayState extends State<TimestampDisplay> {
       return Icon(Icons.medication_outlined, color: Colors.lightGreen.shade800);
     }
     return Icon(Icons.ac_unit, color: Colors.lightBlue.shade800);
+  }
+
+  static void _sortTimestamps(List<Timestamp> timestamps) {
+    timestamps.sort(
+      (a, b) => DateTimeFormatter.parseTime(
+        a.time,
+      ).compareTo(DateTimeFormatter.parseTime(b.time)),
+    );
   }
 }

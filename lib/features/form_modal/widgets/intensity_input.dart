@@ -12,6 +12,9 @@ class IntensityInput extends StatelessWidget {
     return TextFormField(
       decoration: InputDecoration(labelText: "Intensity (1-5)"),
       keyboardType: TextInputType.number,
+      initialValue: headacheForm.id == null
+          ? null
+          : headacheForm.intensity.toString(),
       onSaved: (value) {
         if (value != null && value.isNotEmpty) {
           var valueInt = int.parse(value);

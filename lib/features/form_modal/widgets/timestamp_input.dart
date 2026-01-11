@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:headache_tracker/enums/timestamp_type_enum.dart';
+import 'package:headache_tracker/models/headache.dart';
 import 'package:headache_tracker/models/timestamp.dart';
 import 'package:headache_tracker/utils/datetime_formatter.dart';
 import 'package:headache_tracker/utils/string_extensions.dart';
@@ -8,18 +9,27 @@ typedef TimestampsCallback = void Function(List<Timestamp> timestamps);
 
 class TimestampInput extends StatefulWidget {
   final TimestampsCallback callback;
+  final Headache? editingHeadache;
 
-  const TimestampInput({super.key, required this.callback});
+  const TimestampInput({
+    super.key,
+    this.editingHeadache,
+    required this.callback,
+  });
 
   @override
   State<TimestampInput> createState() => _TimestampInputState();
 }
 
 class _TimestampInputState extends State<TimestampInput> {
-  final List<Timestamp> _timestamps = [];
+  List<Timestamp> _timestamps = [];
 
   @override
   Widget build(BuildContext context) {
+    if (widget.editingHeadache != null) {
+      _timestamps = widget.editingHeadache!.timestamps;
+    }
+
     return Column(
       children: [
         _newTimestampBtn(),

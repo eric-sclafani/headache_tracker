@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:headache_tracker/data/dao/headache_dao.dart';
 import 'package:headache_tracker/data/dao/timestamp_dao.dart';
 import 'package:headache_tracker/data/repositories/headache_repository.dart';
-import 'package:headache_tracker/data/repositories/timestamp_repository.dart';
 import 'package:provider/provider.dart';
 import 'package:headache_tracker/pages/home.dart';
 import 'package:headache_tracker/theme/app_theme.dart';
@@ -28,10 +27,6 @@ class MainApp extends StatelessWidget {
             context.read<HeadacheDao>(),
             context.read<TimestampDao>(),
           ),
-        ),
-        ChangeNotifierProvider<TimestampRepository>(
-          create: (context) =>
-              TimestampRepository(context.read<TimestampDao>()),
         ),
       ],
       child: MaterialApp(

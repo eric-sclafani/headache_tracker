@@ -10,6 +10,16 @@ class HeadacheDao {
     return db.insert(HeadacheTable.table, h.toMap());
   }
 
+  Future<void> update(Headache h) async {
+    final db = await _db.database;
+    await db.update(
+      HeadacheTable.table,
+      h.toMap(),
+      where: 'id = ?',
+      whereArgs: [h.id],
+    );
+  }
+
   Future<void> delete(int id) async {
     final db = await _db.database;
     await db.delete(HeadacheTable.table, where: 'id = ?', whereArgs: [id]);

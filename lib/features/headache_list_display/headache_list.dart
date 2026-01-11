@@ -22,22 +22,14 @@ class _HeadacheListState extends State<HeadacheList> {
   Widget build(BuildContext context) {
     var repo = context.watch<HeadacheRepository>();
     return Expanded(
-      child: repo.headaches.isEmpty
-          ? Center(
-              child: const Text(
-                'No entries added',
-                style: TextStyle(fontStyle: FontStyle.italic, fontSize: 25),
-              ),
-            )
-          : ListView.separated(
-              itemCount: repo.headaches.length,
-              separatorBuilder: (BuildContext context, int index) =>
-                  const Divider(),
-              itemBuilder: (context, index) {
-                var item = repo.headaches[index];
-                return _headacheItem(context, item);
-              },
-            ),
+      child: ListView.separated(
+        itemCount: repo.headaches.length,
+        separatorBuilder: (BuildContext context, int index) => const Divider(),
+        itemBuilder: (context, index) {
+          var item = repo.headaches[index];
+          return _headacheItem(context, item);
+        },
+      ),
     );
   }
 

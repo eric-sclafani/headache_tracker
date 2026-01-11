@@ -8,6 +8,7 @@ class NotesInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: headacheForm.notes,
       decoration: InputDecoration(labelText: "Notes"),
       maxLines: 3,
       maxLength: 250,

@@ -21,7 +21,11 @@ class _OccurenceDateInputState extends State<OccurenceDateInput> {
 
   @override
   void initState() {
-    _dateController.text = DateTimeFormatter.formatDate(DateTime.now());
+    if (widget.headacheForm.id != null) {
+      _dateController.text = widget.headacheForm.occurenceDate;
+    } else {
+      _dateController.text = DateTimeFormatter.formatDate(DateTime.now());
+    }
     super.initState();
   }
 

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:headache_tracker/data/repositories/timestamp_repository.dart';
 import 'package:headache_tracker/features/confirm_delete_modal/confirm_modal.dart';
+import 'package:headache_tracker/features/detail_modal/widgets/notes_display.dart';
 import 'package:headache_tracker/features/detail_modal/widgets/subheader.dart';
 import 'package:headache_tracker/features/detail_modal/widgets/timestamp_display.dart';
+import 'package:headache_tracker/features/form_modal/headache_modal.dart';
 import 'package:headache_tracker/models/headache.dart';
-import 'package:provider/provider.dart';
 
 class DetailDialog extends StatefulWidget {
   final Headache inputHeadache;
@@ -16,22 +16,6 @@ class DetailDialog extends StatefulWidget {
 }
 
 class _DetailDialogState extends State<DetailDialog> {
-  final ScrollController _notesScrollController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-    context.read<TimestampRepository>().loadTimestamps(
-      widget.inputHeadache.id!,
-    );
-  }
-
-  @override
-  void dispose() {
-    _notesScrollController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -58,49 +42,28 @@ class _DetailDialogState extends State<DetailDialog> {
   }
 
   Widget _modalContent() {
-    final repo = context.watch<TimestampRepository>();
     return Column(
       spacing: 5,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         SubHeader(inputHeadache: widget.inputHeadache),
-        _notesDisplay(),
-        TimestampDisplay(timestamps: repo.timestamps),
+        NotesDisplay(widget: widget),
+        TimestampDisplay(timestamps: widget.inputHeadache.timestamps),
       ],
-    );
-  }
-
-  Widget _notesDisplay() {
-    return Flexible(
-      child: Scrollbar(
-        thumbVisibility: true,
-        controller: _notesScrollController,
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border.all(width: 2, color: Colors.black.withAlpha(50)),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          padding: EdgeInsets.all(10),
-          child: SingleChildScrollView(
-            controller: _notesScrollController,
-            scrollDirection: Axis.vertical,
-            child:
-                widget.inputHeadache.notes != null &&
-                    widget.inputHeadache.notes!.isNotEmpty
-                ? Text(widget.inputHeadache.notes!)
-                : Text(
-                    'No notes added',
-                    style: TextStyle(fontStyle: FontStyle.italic),
-                  ),
-          ),
-        ),
-      ),
     );
   }
 
   Widget _editBtn(Headache item) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: () async {
+        if (mounted) {
+          Navigator.pop(context);
+        }
+        await showAddEditDialog(
+          context: context,
+          editingHeadache: widget.inputHeadache,
+        );
+      },
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.orange.shade600,
         foregroundColor: Colors.white,

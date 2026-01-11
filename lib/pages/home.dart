@@ -25,7 +25,7 @@ class Home extends StatelessWidget {
   IconButton _floatingActionBtn(BuildContext context) {
     return IconButton.filled(
       onPressed: () {
-        showAddEditDialog(context: context, mode: 'add');
+        showAddEditDialog(context: context);
       },
       icon: const Icon(Icons.note_add, size: 50),
     );

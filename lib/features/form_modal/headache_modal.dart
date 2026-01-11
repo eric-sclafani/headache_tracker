@@ -1,40 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:headache_tracker/features/form_modal/headache_form.dart';
+import 'package:headache_tracker/models/headache.dart';
 
 class HeadacheModal extends StatelessWidget {
-  final String mode;
+  final Headache? editingHeadache;
 
-  const HeadacheModal({super.key, required this.mode});
+  const HeadacheModal({super.key, this.editingHeadache});
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       insetPadding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 55.0),
       title: Text(
-        mode == 'add' ? 'Add new' : 'Editing',
+        editingHeadache == null ? 'Add new' : 'Editing',
         textAlign: TextAlign.center,
       ),
-      content: SafeArea(child: HeadacheForm()),
+      content: SafeArea(
+        child: HeadacheForm(editingHeadacheForm: editingHeadache),
+      ),
     );
   }
 }
 
 Future<void> showAddEditDialog({
   required BuildContext context,
-  required String mode,
+  Headache? editingHeadache,
 }) {
   return showGeneralDialog(
     context: context,
     barrierColor: Colors.black54,
     transitionDuration: const Duration(milliseconds: 300),
     pageBuilder: (context, animation, secondaryAnimation) {
-      return HeadacheModal(mode: mode);
-    },
-    transitionBuilder: (context, animation, secondaryAnimation, child) {
-      return ScaleTransition(
-        scale: CurvedAnimation(parent: animation, curve: Curves.easeOutBack),
-        child: child,
-      );
+      return HeadacheModal(editingHeadache: editingHeadache);
     },
   );
 }
