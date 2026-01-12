@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:headache_tracker/data/dao/headache_dao.dart';
 import 'package:headache_tracker/data/dao/timestamp_dao.dart';
 import 'package:headache_tracker/models/headache.dart';
-import 'package:headache_tracker/utils/datetime_formatter.dart';
 
 class HeadacheRepository extends ChangeNotifier {
   final HeadacheDao _headacheDao;

@@ -10,7 +10,7 @@ class HeadacheModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      insetPadding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 55.0),
+      insetPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 55.0),
       title: Text(
         editingHeadache == null ? 'Add new' : 'Editing',
         textAlign: TextAlign.center,

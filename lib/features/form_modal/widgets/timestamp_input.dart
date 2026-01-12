@@ -42,18 +42,34 @@ class _TimestampInputState extends State<TimestampInput> {
             itemBuilder: (BuildContext context, int index) {
               Timestamp? timestamp = _timestamps[index];
               return Row(
-                spacing: 3,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   _timestampTypeDropdown(timestamp),
-                  Icon(Icons.alternate_email),
                   _timeSelectBtn(context, timestamp),
+                  _deleteTimestampBtn(timestamp),
                 ],
               );
             },
           ),
         ),
       ],
+    );
+  }
+
+  IconButton _deleteTimestampBtn(Timestamp timestamp) {
+    return IconButton(
+      onPressed: () {
+        setState(() {
+          _timestamps.remove(timestamp);
+          widget.callback(_timestamps);
+        });
+      },
+      icon: Icon(Icons.delete_forever_rounded),
+      style: IconButton.styleFrom(
+        backgroundColor: Colors.transparent,
+        foregroundColor: Colors.red.shade600,
+        iconSize: 30,
+      ),
     );
   }
 
