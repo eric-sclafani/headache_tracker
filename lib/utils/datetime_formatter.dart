@@ -4,6 +4,7 @@ class DateTimeFormatter {
   static final _dateFormat = DateFormat('MM/dd/yyyy');
   static final _timeFormat = DateFormat.jm();
   static final _stringTimeFormat = DateFormat('h:mm a');
+  static final _monthYearFormat = DateFormat.yMMM();
 
   static String formatDate(DateTime date) {
     return _dateFormat.format(date);
@@ -12,6 +13,11 @@ class DateTimeFormatter {
   static String formatTime(DateTime time) {
     var d = DateTime(2000, 1, 1, time.hour, time.minute);
     return _timeFormat.format(d);
+  }
+
+  static String formatMonthYear(String dateStr) {
+    var dateTime = _dateFormat.parse(dateStr);
+    return _monthYearFormat.format(dateTime);
   }
 
   static DateTime parseTime(String time) {

@@ -4,26 +4,40 @@ import 'package:flutter/foundation.dart';
 import 'package:headache_tracker/data/dao/headache_dao.dart';
 import 'package:headache_tracker/data/dao/timestamp_dao.dart';
 import 'package:headache_tracker/models/headache.dart';
+import 'package:headache_tracker/utils/datetime_formatter.dart';
 
 class HeadacheRepository extends ChangeNotifier {
   final HeadacheDao _headacheDao;
   final TimestampDao _timestampDao;
 
-  List<Headache> _headaches = [];
+  List<Headache> _headacheList = [];
+  Map<String, List<Headache>> _headacheMap = {};
 
   HeadacheRepository(this._headacheDao, this._timestampDao);
 
-  UnmodifiableListView<Headache> get headaches {
-    _headaches.sort((a, b) => b.occurenceDate.compareTo(a.occurenceDate));
-    return UnmodifiableListView(_headaches);
-  }
+  UnmodifiableListView<Headache> get headacheList =>
+      UnmodifiableListView(_headacheList);
+
+  Map<String, List<Headache>> get headacheMap => _headacheMap;
 
   Future<void> loadHeadaches() async {
-    _headaches = await _headacheDao.getAll();
-    for (var h in _headaches) {
+    _headacheList = await _headacheDao.getAll();
+    for (var h in _headacheList) {
       h.timestamps = await _timestampDao.getAllByHeadacheId(h.id!);
     }
+    _populateHeadacheMap();
     notifyListeners();
+  }
+
+  void _populateHeadacheMap() {
+    for (var h in _headacheList) {
+      var monthYearStr = DateTimeFormatter.formatMonthYear(h.occurenceDate);
+      if (!_headacheMap.containsKey(monthYearStr)) {
+        _headacheMap[monthYearStr] = [];
+      }
+      _headacheMap[monthYearStr]?.add(h);
+    }
+    print(_headacheMap.entries.toList());
   }
 
   Future<void> updateHeadache(Headache h) async {

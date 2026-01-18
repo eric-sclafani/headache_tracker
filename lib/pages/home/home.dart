@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:headache_tracker/features/form_modal/headache_modal.dart';
-import 'package:headache_tracker/features/headache_list_display/headache_list.dart';
+import 'package:headache_tracker/pages/sorted_list/sorted_list.dart';
 
 class Home extends StatelessWidget {
   const Home({super.key});
@@ -16,7 +16,7 @@ class Home extends StatelessWidget {
         margin: const EdgeInsets.all(20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: [HeadacheList()],
+          children: [SortedList()],
         ),
       ),
     );

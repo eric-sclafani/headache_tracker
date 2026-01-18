@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:headache_tracker/features/form_modal/headache_form.dart';
+import 'package:headache_tracker/features/form_modal/widgets/headache_form.dart';
 import 'package:headache_tracker/models/headache.dart';
 
 class HeadacheModal extends StatelessWidget {

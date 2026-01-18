@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:headache_tracker/data/dao/headache_dao.dart';
 import 'package:headache_tracker/data/dao/timestamp_dao.dart';
 import 'package:headache_tracker/data/repositories/headache_repository.dart';
+import 'package:headache_tracker/pages/home/home.dart';
 import 'package:provider/provider.dart';
-import 'package:headache_tracker/pages/home.dart';
 import 'package:headache_tracker/theme/app_theme.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
