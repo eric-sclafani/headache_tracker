@@ -2,18 +2,42 @@ import 'package:flutter/material.dart';
 import 'package:headache_tracker/features/detail_modal/detail_modal.dart';
 import 'package:headache_tracker/models/headache.dart';
 
-class HeadacheListTile extends StatelessWidget {
-  final Headache headache;
-  const HeadacheListTile({super.key, required this.headache});
+class HeadacheExpandTile extends StatelessWidget {
+  final MapEntry<String, List<Headache>> headacheMap;
+  const HeadacheExpandTile({super.key, required this.headacheMap});
 
   @override
   Widget build(BuildContext context) {
-    var title = headache.occurenceDate;
-    return ListTile(
+    var title = headacheMap.key;
+    return ExpansionTile(
+      tilePadding: EdgeInsets.all(0),
+      shape: const Border(),
+      showTrailingIcon: false,
+      initiallyExpanded: true,
       leading: Icon(Icons.event_note_rounded, size: 25),
+      title: Text(
+        title,
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+      ),
+      children: _generateTileEntries(context),
+    );
+  }
+
+  List<ListTile> _generateTileEntries(BuildContext context) {
+    var headaches = headacheMap.value;
+    List<ListTile> tiles = [];
+    for (var h in headaches) {
+      var tile = _createHeadacheListTile(h, context);
+      tiles.add(tile);
+    }
+    return tiles;
+  }
+
+  ListTile _createHeadacheListTile(Headache headache, BuildContext context) {
+    return ListTile(
       title: SizedBox(
         height: 18,
-        child: Text(title, style: TextStyle(fontSize: 16)),
+        child: Text(headache.occurenceDate, style: TextStyle(fontSize: 16)),
       ),
       subtitle: Row(
         spacing: 10,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:headache_tracker/data/repositories/headache_repository.dart';
-import 'package:headache_tracker/features/headache_list/headache_list_tile.dart';
+import 'package:headache_tracker/features/headache_list/headache_expand_tile.dart';
 import 'package:provider/provider.dart';
 
 class SortedList extends StatefulWidget {
@@ -21,14 +21,24 @@ class _SortedListState extends State<SortedList> {
   Widget build(BuildContext context) {
     final repo = context.watch<HeadacheRepository>();
     return Expanded(
-      child: ListView.separated(
-        itemCount: repo.headacheList.length,
-        separatorBuilder: (BuildContext context, int index) => const Divider(),
+      child: ListView.builder(
+        itemCount: repo.headacheMap.length,
         itemBuilder: (context, index) {
-          var item = repo.headacheList[index];
-          return HeadacheListTile(headache: item);
+          var headacheMapEntry = repo.headacheMap[index];
+          return HeadacheExpandTile(headacheMap: headacheMapEntry);
         },
       ),
     );
   }
 }
+
+
+//  return ListView.separated(
+//             itemCount: headacheMapEntry.value.length,
+//             itemBuilder: (context, index) {
+//               var headache = headacheMapEntry.value[index];
+//               return HeadacheListTile(headache: headache);
+//             },
+//             separatorBuilder: (BuildContext context, int index) =>
+//                 Text(headacheMapEntry.key),
+//           );

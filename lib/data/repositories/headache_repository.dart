@@ -11,14 +11,15 @@ class HeadacheRepository extends ChangeNotifier {
   final TimestampDao _timestampDao;
 
   List<Headache> _headacheList = [];
-  Map<String, List<Headache>> _headacheMap = {};
+  final Map<String, List<Headache>> _headacheMap = {};
 
   HeadacheRepository(this._headacheDao, this._timestampDao);
 
   UnmodifiableListView<Headache> get headacheList =>
       UnmodifiableListView(_headacheList);
 
-  Map<String, List<Headache>> get headacheMap => _headacheMap;
+  List<MapEntry<String, List<Headache>>> get headacheMap =>
+      _headacheMap.entries.toList();
 
   Future<void> loadHeadaches() async {
     _headacheList = await _headacheDao.getAll();
@@ -37,7 +38,6 @@ class HeadacheRepository extends ChangeNotifier {
       }
       _headacheMap[monthYearStr]?.add(h);
     }
-    print(_headacheMap.entries.toList());
   }
 
   Future<void> updateHeadache(Headache h) async {
