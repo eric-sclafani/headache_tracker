@@ -1,5 +1,3 @@
-import 'dart:collection';
-
 import 'package:flutter/foundation.dart';
 import 'package:headache_tracker/data/dao/headache_dao.dart';
 import 'package:headache_tracker/data/dao/timestamp_dao.dart';
@@ -11,12 +9,11 @@ class HeadacheRepository extends ChangeNotifier {
   final TimestampDao _timestampDao;
 
   List<Headache> _headacheList = [];
-  final Map<String, List<Headache>> _headacheMap = {};
+  Map<String, List<Headache>> _headacheMap = {};
 
   HeadacheRepository(this._headacheDao, this._timestampDao);
 
-  UnmodifiableListView<Headache> get headacheList =>
-      UnmodifiableListView(_headacheList);
+  List<Headache> get headacheList => _headacheList;
 
   List<MapEntry<String, List<Headache>>> get headacheMap =>
       _headacheMap.entries.toList();
@@ -31,13 +28,15 @@ class HeadacheRepository extends ChangeNotifier {
   }
 
   void _populateHeadacheMap() {
+    Map<String, List<Headache>> headacheMap = {};
     for (var h in _headacheList) {
       var monthYearStr = DateTimeFormatter.formatMonthYear(h.occurenceDate);
-      if (!_headacheMap.containsKey(monthYearStr)) {
-        _headacheMap[monthYearStr] = [];
+      if (!headacheMap.containsKey(monthYearStr)) {
+        headacheMap[monthYearStr] = [];
       }
-      _headacheMap[monthYearStr]?.add(h);
+      headacheMap[monthYearStr]?.add(h);
     }
+    _headacheMap = headacheMap;
   }
 
   Future<void> updateHeadache(Headache h) async {

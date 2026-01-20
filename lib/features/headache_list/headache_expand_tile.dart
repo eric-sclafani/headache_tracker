@@ -12,8 +12,6 @@ class HeadacheExpandTile extends StatelessWidget {
     return ExpansionTile(
       tilePadding: EdgeInsets.all(0),
       shape: const Border(),
-      showTrailingIcon: false,
-      initiallyExpanded: true,
       leading: Icon(Icons.event_note_rounded, size: 25),
       title: Text(
         title,
@@ -25,6 +23,7 @@ class HeadacheExpandTile extends StatelessWidget {
 
   List<ListTile> _generateTileEntries(BuildContext context) {
     var headaches = headacheMap.value;
+    headaches.sort((a, b) => b.occurenceDate.compareTo(a.occurenceDate));
     List<ListTile> tiles = [];
     for (var h in headaches) {
       var tile = _createHeadacheListTile(h, context);
