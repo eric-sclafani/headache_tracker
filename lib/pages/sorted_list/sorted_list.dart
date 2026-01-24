@@ -20,7 +20,8 @@ class _SortedListState extends State<SortedList> {
   @override
   Widget build(BuildContext context) {
     final repo = context.watch<HeadacheRepository>();
-    return Expanded(
+    return Container(
+      margin: const EdgeInsets.all(20),
       child: ListView.builder(
         itemCount: repo.headacheMap.length,
         itemBuilder: (context, index) {

@@ -20,6 +20,10 @@ class DateTimeFormatter {
     return _monthYearFormat.format(dateTime);
   }
 
+  static DateTime parseMonthYear(String monthYearStr) {
+    return _monthYearFormat.parse(monthYearStr);
+  }
+
   static DateTime parseTime(String time) {
     time = time.replaceAll('\u202F', ' ');
     final dt = _stringTimeFormat.parse(time.toUpperCase());

@@ -15,8 +15,15 @@ class HeadacheRepository extends ChangeNotifier {
 
   List<Headache> get headacheList => _headacheList;
 
-  List<MapEntry<String, List<Headache>>> get headacheMap =>
-      _headacheMap.entries.toList();
+  List<MapEntry<String, List<Headache>>> get headacheMap {
+    var entries = _headacheMap.entries.toList();
+    entries.sort((a, b) {
+      var d1 = DateTimeFormatter.parseMonthYear(a.key);
+      var d2 = DateTimeFormatter.parseMonthYear(b.key);
+      return d2.compareTo(d1);
+    });
+    return entries;
+  }
 
   Future<void> loadHeadaches() async {
     _headacheList = await _headacheDao.getAll();

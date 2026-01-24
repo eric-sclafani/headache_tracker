@@ -1,9 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:headache_tracker/features/form_modal/headache_modal.dart';
+import 'package:headache_tracker/pages/calendar/calendar_view.dart';
 import 'package:headache_tracker/pages/sorted_list/sorted_list.dart';
+import 'package:headache_tracker/pages/table/table_view.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  int currentPageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -12,13 +21,35 @@ class Home extends StatelessWidget {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: _appBar(),
       floatingActionButton: _floatingActionBtn(context),
-      body: Container(
-        margin: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [SortedList()],
+      body: [SortedList(), CalendarView(), TableView()][currentPageIndex],
+      bottomNavigationBar: _bottomNavBar(),
+    );
+  }
+
+  NavigationBar _bottomNavBar() {
+    return NavigationBar(
+      onDestinationSelected: (int index) {
+        setState(() {
+          currentPageIndex = index;
+        });
+      },
+      selectedIndex: currentPageIndex,
+      labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+      indicatorColor: Colors.blue.shade300,
+      destinations: [
+        NavigationDestination(
+          icon: Icon(Icons.menu_book_rounded),
+          label: 'List',
         ),
-      ),
+        NavigationDestination(
+          icon: Icon(Icons.calendar_month_sharp),
+          label: 'Calendar',
+        ),
+        NavigationDestination(
+          icon: Icon(Icons.data_exploration),
+          label: 'Data',
+        ),
+      ],
     );
   }
 
@@ -35,7 +66,10 @@ class Home extends StatelessWidget {
     return AppBar(
       centerTitle: true,
       forceMaterialTransparency: true,
-      leading: IconButton(onPressed: () {}, icon: Icon(Icons.menu)),
+      title: const Text(
+        'My Headaches',
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
     );
   }
 }
