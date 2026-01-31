@@ -15,7 +15,7 @@ class HeadacheRepository extends ChangeNotifier {
 
   List<Headache> get headacheList => _headacheList;
 
-  List<MapEntry<String, List<Headache>>> get headacheMap {
+  List<MapEntry<String, List<Headache>>> get headacheMapList {
     var entries = _headacheMap.entries.toList();
     entries.sort((a, b) {
       var d1 = DateTimeFormatter.parseMonthYear(a.key);

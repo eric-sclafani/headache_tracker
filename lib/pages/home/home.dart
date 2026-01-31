@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:headache_tracker/features/form_modal/headache_modal.dart';
-import 'package:headache_tracker/pages/calendar/calendar_view.dart';
+import 'package:headache_tracker/pages/stats/stats_view.dart';
 import 'package:headache_tracker/pages/sorted_list/sorted_list.dart';
-import 'package:headache_tracker/pages/table/table_view.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -21,7 +20,7 @@ class _HomeState extends State<Home> {
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: _appBar(),
       floatingActionButton: _floatingActionBtn(context),
-      body: [SortedList(), CalendarView(), TableView()][currentPageIndex],
+      body: [SortedList(), StatsView(), Text('')][currentPageIndex],
       bottomNavigationBar: _bottomNavBar(),
     );
   }
@@ -40,10 +39,6 @@ class _HomeState extends State<Home> {
         NavigationDestination(
           icon: Icon(Icons.menu_book_rounded),
           label: 'List',
-        ),
-        NavigationDestination(
-          icon: Icon(Icons.calendar_month_sharp),
-          label: 'Calendar',
         ),
         NavigationDestination(
           icon: Icon(Icons.data_exploration),

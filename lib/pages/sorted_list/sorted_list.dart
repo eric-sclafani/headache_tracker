@@ -23,9 +23,9 @@ class _SortedListState extends State<SortedList> {
     return Container(
       margin: const EdgeInsets.all(20),
       child: ListView.builder(
-        itemCount: repo.headacheMap.length,
+        itemCount: repo.headacheMapList.length,
         itemBuilder: (context, index) {
-          var headacheMapEntry = repo.headacheMap[index];
+          var headacheMapEntry = repo.headacheMapList[index];
           return HeadacheExpandTile(headacheMap: headacheMapEntry);
         },
       ),

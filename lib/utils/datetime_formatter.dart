@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 
+// since sqlite doesnt have datetime, need methods to convert to/from dart datetimes and strings
 class DateTimeFormatter {
   static final _dateFormat = DateFormat('MM/dd/yyyy');
   static final _timeFormat = DateFormat.jm();
@@ -28,5 +29,9 @@ class DateTimeFormatter {
     time = time.replaceAll('\u202F', ' ');
     final dt = _stringTimeFormat.parse(time.toUpperCase());
     return DateTime(2000, 1, 1, dt.hour, dt.minute);
+  }
+
+  static DateTime parseDate(String date) {
+    return _dateFormat.parse(date);
   }
 }

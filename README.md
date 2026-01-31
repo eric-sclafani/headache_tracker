@@ -4,9 +4,8 @@ App I am making for myself to track my headaches.
 
 # TODO
 
--   Implement different views: calendar, list, table
--   For all DB actions, add a success/error indicator to avoid code crashes
--   Centralize all styles
+- For all DB actions, add a success/error indicator to avoid code crashes
+- Centralize all styles
 
 # Attributions
 
