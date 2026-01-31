@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:headache_tracker/data/dao/headache_dao.dart';
 import 'package:headache_tracker/data/dao/timestamp_dao.dart';
+import 'package:headache_tracker/enums/timestamp_type_enum.dart';
 import 'package:headache_tracker/models/headache.dart';
+import 'package:headache_tracker/models/timestamp.dart';
 import 'package:headache_tracker/utils/datetime_formatter.dart';
 
 class HeadacheRepository extends ChangeNotifier {
@@ -13,8 +15,6 @@ class HeadacheRepository extends ChangeNotifier {
 
   HeadacheRepository(this._headacheDao, this._timestampDao);
 
-  List<Headache> get headacheList => _headacheList;
-
   List<MapEntry<String, List<Headache>>> get headacheMapList {
     var entries = _headacheMap.entries.toList();
     entries.sort((a, b) {
@@ -24,6 +24,11 @@ class HeadacheRepository extends ChangeNotifier {
     });
     return entries;
   }
+
+  int get numMonthsRecorded => _headacheMap.keys.length;
+  int get totalHeadaches => _headacheList.length;
+  int get totalAdvils => _getTotalTimestampType(TimestampTypeEnum.advil);
+  int get totalIcepacks => _getTotalTimestampType(TimestampTypeEnum.icePack);
 
   Future<void> loadHeadaches() async {
     _headacheList = await _headacheDao.getAll();
@@ -73,5 +78,30 @@ class HeadacheRepository extends ChangeNotifier {
     await _timestampDao.delete(headacheId);
     await _headacheDao.delete(headacheId);
     await loadHeadaches();
+  }
+
+  double getAvgHeadachesPerMonth() {
+    return totalHeadaches / numMonthsRecorded;
+  }
+
+  double getAvgAdvilPerMonth() {
+    return totalAdvils / numMonthsRecorded;
+  }
+
+  double getAvgAdvilPerHeadache() {
+    return totalAdvils / totalHeadaches;
+  }
+
+  int _getTotalTimestampType(TimestampTypeEnum type) {
+    List<Timestamp> allTypes = [];
+    _headacheList.forEach(
+      ((h) => {
+        for (var t in h.timestamps)
+          {
+            if (t.type == type) {allTypes.add(t)},
+          },
+      }),
+    );
+    return allTypes.length;
   }
 }

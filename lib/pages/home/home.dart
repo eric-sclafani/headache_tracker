@@ -41,7 +41,7 @@ class _HomeState extends State<Home> {
           label: 'List',
         ),
         NavigationDestination(
-          icon: Icon(Icons.data_exploration),
+          icon: Icon(Icons.data_thresholding_outlined),
           label: 'Data',
         ),
       ],
