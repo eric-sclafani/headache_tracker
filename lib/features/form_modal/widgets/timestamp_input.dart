@@ -44,7 +44,6 @@ class _TimestampInputState extends State<TimestampInput> {
               return Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('1'),
                   _timestampTypeDropdown(timestamp),
                   _timeSelectBtn(context, timestamp),
                   _deleteTimestampBtn(timestamp),

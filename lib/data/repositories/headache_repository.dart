@@ -80,16 +80,16 @@ class HeadacheRepository extends ChangeNotifier {
     await loadHeadaches();
   }
 
-  double getAvgHeadachesPerMonth() {
-    return totalHeadaches / numMonthsRecorded;
+  int getAvgHeadachesPerMonth() {
+    return (totalHeadaches / numMonthsRecorded).round();
   }
 
-  double getAvgAdvilPerMonth() {
-    return totalAdvils / numMonthsRecorded;
+  int getAvgAdvilPerMonth() {
+    return (totalAdvils / numMonthsRecorded).round();
   }
 
-  double getAvgAdvilPerHeadache() {
-    return totalAdvils / totalHeadaches;
+  int getAvgAdvilPerHeadache() {
+    return (totalAdvils / totalHeadaches).round();
   }
 
   int _getTotalTimestampType(TimestampTypeEnum type) {
