@@ -11,13 +11,22 @@ class StatsView extends StatelessWidget {
     var labelValuePairs = _getStatValueLabelPairs(repo);
     return Column(
       children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          spacing: 10,
+          children: [
+            Text('Recorded Months:'),
+            Text(repo.numMonthsRecorded.toString()),
+          ],
+        ),
         Text(
-          '(Recording started November 2025)',
+          '(Recording started November 29th, 2025)',
           style: TextStyle(
             fontStyle: FontStyle.italic,
             color: Colors.red.shade900,
           ),
         ),
+        _downloadBtn(repo),
         Divider(),
         Expanded(
           child: ListView.separated(
@@ -45,6 +54,15 @@ class StatsView extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+
+  ElevatedButton _downloadBtn(HeadacheRepository repo) {
+    return ElevatedButton(
+      onPressed: () async {
+        await repo.downloadJson();
+      },
+      child: Text('Download JSON'),
     );
   }
 

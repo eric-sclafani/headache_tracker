@@ -5,6 +5,10 @@ import 'package:headache_tracker/enums/timestamp_type_enum.dart';
 import 'package:headache_tracker/models/headache.dart';
 import 'package:headache_tracker/models/timestamp.dart';
 import 'package:headache_tracker/utils/datetime_formatter.dart';
+import 'dart:convert';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
+import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 
 class HeadacheRepository extends ChangeNotifier {
   final HeadacheDao _headacheDao;
@@ -28,7 +32,6 @@ class HeadacheRepository extends ChangeNotifier {
   int get numMonthsRecorded => _headacheMap.keys.length;
   int get totalHeadaches => _headacheList.length;
   int get totalAdvils => _getTotalTimestampType(TimestampTypeEnum.advil);
-  int get totalIcepacks => _getTotalTimestampType(TimestampTypeEnum.icePack);
 
   Future<void> loadHeadaches() async {
     _headacheList = await _headacheDao.getAll();
@@ -81,15 +84,46 @@ class HeadacheRepository extends ChangeNotifier {
   }
 
   int getAvgHeadachesPerMonth() {
-    return (totalHeadaches / numMonthsRecorded).round();
+    var calc = (totalHeadaches / numMonthsRecorded);
+    return calc > 0 ? calc.round() : 0;
   }
 
   int getAvgAdvilPerMonth() {
-    return (totalAdvils / numMonthsRecorded).round();
+    var calc = (totalAdvils / numMonthsRecorded);
+    return calc > 0 ? calc.round() : 0;
   }
 
   int getAvgAdvilPerHeadache() {
-    return (totalAdvils / totalHeadaches).round();
+    var calc = (totalAdvils / totalHeadaches);
+    return calc > 0 ? calc.round() : 0;
+  }
+
+  dynamic downloadJson() async {
+    var data = _convertAllDataToJSON();
+    var fileName = 'htracker_data_${DateTime.now().toString()}.json';
+    var json = jsonEncode(data);
+
+    final Uint8List bytes = Uint8List.fromList(json.codeUnits);
+
+    await FlutterFileDialog.saveFile(
+      params: SaveFileDialogParams(
+        data: bytes,
+        fileName: fileName,
+        mimeTypesFilter: ['application/json'],
+      ),
+    );
+  }
+
+  Map<String, List<dynamic>> _convertAllDataToJSON() {
+    Map<String, List<dynamic>> data = {'allHeadaches': [], 'allTimestamps': []};
+    for (var h in _headacheList) {
+      data['allHeadaches']?.add(h.toMap());
+      for (var t in h.timestamps) {
+        data['allTimestamps']?.add(t.toMap());
+      }
+    }
+
+    return data;
   }
 
   int _getTotalTimestampType(TimestampTypeEnum type) {

@@ -10,6 +10,7 @@ class HeadacheExpandTile extends StatelessWidget {
   Widget build(BuildContext context) {
     var title = headacheMap.key;
     return ExpansionTile(
+      initiallyExpanded: true,
       tilePadding: EdgeInsets.all(0),
       shape: const Border(),
       leading: Icon(Icons.event_note_rounded, size: 25),

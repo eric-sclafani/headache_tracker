@@ -6,16 +6,6 @@ App I am making for myself to track my headaches.
 
 - For all DB actions, add a success/error indicator to avoid code crashes
 - Centralize all styles
-- Add a stats page that has following:
-    - Total number of recorded headaches (from start date)
-    - Avg headaches/month
-    - Total advil
-    - Avg advil taken per headache
-    - Avg advil taken per month
-    - Total icepacks
-    - Avg ice packs per month
-    - Avg ice pack per headache
-    -
 
 # Attributions
 
