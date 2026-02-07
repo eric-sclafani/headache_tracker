@@ -70,7 +70,6 @@ class StatsView extends StatelessWidget {
     var pairs = [
       ('Total Headaches:', repo.totalHeadaches),
       ('Avg Monthly Headaches:', repo.getAvgHeadachesPerMonth()),
-      ('Total Advil taken:', repo.totalAdvils),
       ('Avg Monthly Advil:', repo.getAvgAdvilPerMonth()),
       ('Avg Advil Per Headache:', repo.getAvgAdvilPerHeadache()),
     ];

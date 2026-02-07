@@ -6,8 +6,6 @@ import 'package:headache_tracker/models/headache.dart';
 import 'package:headache_tracker/models/timestamp.dart';
 import 'package:headache_tracker/utils/datetime_formatter.dart';
 import 'dart:convert';
-import 'package:path_provider/path_provider.dart';
-import 'dart:io';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 
 class HeadacheRepository extends ChangeNotifier {
